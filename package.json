@@ -1,0 +1,37 @@
+{
+  "name": "@lenna-project/lenna-web",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "start": "webpack-cli serve",
+    "serve": "serve dist -p 3001",
+    "build": "webpack --mode production",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "file-saver": "^2.0.5",
+    "jszip": "^3.6.0",
+    "nprogress": "^0.2.0",
+    "@babel/core": "^7.11.0",
+    "babel-loader": "^8.1.0",
+    "serve": "^11.3.2",
+    "vue": "^3.0.11",
+    "vue-draggable-next": "^2.0.1",
+    "vue-upload-component": "^3.0.50"
+  },
+  "devDependencies": {
+    "@types/file-saver": "^2.0.1",
+    "@types/nprogress": "^0.2.0",
+    "@vue/compiler-sfc": "^3.0.11",
+    "copy-webpack-plugin": "^8.1.1",
+    "css-loader": "3.6.0",
+    "file-loader": "6.2.0",
+    "html-webpack-plugin": "4.5.1",
+    "mini-css-extract-plugin": "0.9.0",
+    "url-loader": "4.1.1",
+    "vue-loader": "16.0.0-beta.8",
+    "webpack": "5.18.0",
+    "webpack-cli": "4.3.1",
+    "webpack-dev-server": "3.11.2"
+  }
+}

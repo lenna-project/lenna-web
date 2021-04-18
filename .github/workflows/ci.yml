@@ -1,0 +1,35 @@
+on: [push]
+
+name: CI
+
+jobs:
+  build_web_app:
+    name: Web App
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+      - name: Install npm dependencies
+        run: npm ci
+      - name: Build App
+        run: NODE_ENV=production npm run build --if-present
+
+      - name: Deploy App
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./dist
+          keep_files: true
+
+      - name: Deploy App
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.DEPLOY_KEY }}
+          external_repository: lenna-project/lenna-project.github.io
+          publish_branch: gh-pages
+          publish_dir: ./dist
+          keep_files: true
