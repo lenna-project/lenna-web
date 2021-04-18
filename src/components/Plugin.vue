@@ -4,14 +4,12 @@
       <input
         type="checkbox"
         id="checkbox"
-        v-model="enabled"
         v-on:change="updateEnabled(enabled)"
       />
       <label for="checkbox">{{ plugin.name() }}</label>
     </h1>
-    <div id="pui"/>
     {{ plugin.description() }}
-    <div v-if="enabled">
+    <div>
       <div v-if="ui && defaultConfig">
         <component
           :key="pluginKey"
@@ -19,7 +17,6 @@
           :defaultConfig="defaultConfig"
           @changeConfig="updateConfig($event)"
         ></component>
-        <div id="pui"/>
       </div>
       <div v-else>
         <PluginConfig
@@ -66,12 +63,12 @@ export default {
       });
     },
     async loadUI() {
-      System.import(this.name).then((plugin) => {
-        if (plugin.ui) {
-          this.ui = createUI(this.name, plugin.ui);
+      console.log(this.plugin)
+     
+        if (this.plugin.ui) {
+          this.ui = createUI(this.name, this.plugin.ui);
           console.log(this.ui);
         }
-      });
     },
     async updateConfig(config) {
       this.$emit("changeConfig", config);

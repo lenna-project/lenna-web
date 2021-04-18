@@ -17,10 +17,12 @@
 import { defineComponent } from "vue";
 import { VueDraggableNext } from "vue-draggable-next";
 import Plugin from "./Plugin.vue";
+
 export default defineComponent({
   name: "PluginsManager",
   props: {
     pluginsmap: String,
+    pluginsjson: String,
   },
   components: {
     Plugin,
@@ -32,7 +34,13 @@ export default defineComponent({
     };
   },
   beforeMount() {
-    this.getPluginsmap();
+    try {
+      this.getPluginsmap();
+      //this.getPluginsjson();
+    } catch (error) {
+      console.log(error);
+    }
+    this.importPlugin("canny", "http://localhost:3002/remoteEntry.js");
   },
   methods: {
     changeEnabled(name, enabled) {
@@ -46,19 +54,53 @@ export default defineComponent({
     raw(comp) {
       return comp;
     },
-    async getPluginsmap() {
-      const res = await fetch(this.pluginsmap);
-      const data = await res.json();
-      for (const key in data.imports) {
-        System.import(key).then((plugin) => {
+    importPlugin(key, url) {
+      console.log(key, url);
+      System.import(url).then((module) => {
+        console.log(module);
+        module.get("default").then((plugin) => {
           this.plugins.push({
             name: key,
-            url: data.imports[key],
-            plugin: plugin,
+            url: url,
+            plugin: plugin(),
             enabled: false,
             config: {},
           });
+          console.log(plugin().ui);
         });
+
+        module.get("Widget").then((widget) => {
+          console.log(widget);
+          console.log(widget());
+        });
+      });
+    },
+    async getPluginsmap() {
+      if (this.pluginsmap) {
+        const res = await fetch(this.pluginsmap);
+        const data = await res.json();
+        for (const key in data.imports) {
+          System.import(key).then((plugin) => {
+            console.log(plugin);
+            this.plugins.push({
+              name: key,
+              url: data.imports[key],
+              plugin: plugin,
+              enabled: false,
+              config: {},
+            });
+          });
+        }
+      }
+    },
+    async getPluginsjson() {
+      if (this.pluginsjson) {
+        const res = await fetch(this.pluginsjson);
+        const data = await res.json();
+        for (const key in data.plugins) {
+          let url = data.imports[key];
+          this.importPlugin(key, url);
+        }
       }
     },
   },

@@ -9,6 +9,7 @@
       <PluginsManager
         ref="pluginsManager"
         pluginsmap="https://lenna.app/lenna-plugins/importmap.json"
+        pluginsjson="https://lenna.app/lenna-plugins/plugins.json"
       />
     </div>
     <ImagePreview :images="resultImages" />

@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const CopyPlugin = require("copy-webpack-plugin");
+const deps = require("./package.json").dependencies;
 
 module.exports = (env = {}) => ({
   mode: "development",
@@ -61,12 +62,33 @@ module.exports = (env = {}) => ({
       filename: "[name].css",
     }),
     new ModuleFederationPlugin({
-      name: "layout",
-      filename: "remoteEntry.js",
-      remotes: {
-        home: "home@http://localhost:3002/remoteEntry.js",
+      name: "lenna-web",
+      shared: {
+        vue: {
+          requiredVersion: deps.vue,
+          import: "vue",
+          shareKey: "vue",
+          shareScope: "default",
+          singleton: true,
+          eager: true
+        },
+        "vue-draggable-next": {
+          requiredVersion: deps["vue-draggable-next"],
+          import: "vue-draggable-next",
+          shareKey: "vue-draggable-next",
+          shareScope: "default",
+          singleton: true,
+          eager: true
+        },
+        "vue-upload-component": {
+          requiredVersion:  deps["vue-upload-component"],
+          import: "vue-upload-component",
+          shareKey: "vue-upload-component",
+          shareScope: "default",
+          singleton: true,
+          eager: true
+        },
       },
-      exposes: {},
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "./index.html"),
