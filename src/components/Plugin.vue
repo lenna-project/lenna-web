@@ -4,12 +4,13 @@
       <input
         type="checkbox"
         id="checkbox"
+        v-model="enabled"
         v-on:change="updateEnabled(enabled)"
       />
       <label for="checkbox">{{ plugin.name() }}</label>
     </h1>
     {{ plugin.description() }}
-    <div>
+    <div v-if="enabled">
       <div v-if="ui && defaultConfig">
         <component
           :key="pluginKey"
@@ -30,18 +31,19 @@
 </template>
 
 <script>
-import {createApp,vcreateCommentVNode, createStaticVNode, defineAsyncComponent, shallowRef} from 'vue';
+import { shallowRef } from "vue";
 import PluginConfig from "./PluginConfig.vue";
 
 const createUI = (name, component) => {
   return component;
-}
+};
 
 export default {
   name: "Plugin",
   props: {
     name: String,
     plugin: Object,
+    url: String,
   },
   components: {
     PluginConfig,
@@ -63,12 +65,16 @@ export default {
       });
     },
     async loadUI() {
-      console.log(this.plugin)
-     
-        if (this.plugin.ui) {
-          this.ui = createUI(this.name, this.plugin.ui);
-          console.log(this.ui);
-        }
+      if (this.plugin.ui && this.url) {
+        System.import(this.url)
+          .then((module) => {
+            module.get("./Widget").then((widget) => {
+              this.ui = createUI(this.name, widget().default);
+              console.log(this.ui);
+            });
+          })
+          .catch((e) => console.log(e));
+      }
     },
     async updateConfig(config) {
       this.$emit("changeConfig", config);

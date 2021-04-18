@@ -9,19 +9,18 @@
     <title>Lenna Web</title>
     <script type="systemjs-importmap" src="https://lenna.app/lenna-plugins/importmap.json"></script>
     <script type="systemjs-importmap">
-    {
-      "imports": {
-        "vue": "https://cdn.jsdelivr.net/npm/vue@3.0.7/dist/vue.global.prod.js"
-      }
-    }
+        {
+          "imports": {
+            "vue": "https://cdn.jsdelivr.net/npm/vue@3.0.11/dist/vue.global.prod.js"
+          }
+        }
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/use-default.min.js"></script>
-
     <script>
-        System.import("vue");
+        Object.getPrototypeOf(System).firstGlobalProp = true;
     </script>
 </head>
 

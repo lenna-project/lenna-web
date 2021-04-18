@@ -5,6 +5,7 @@
         <Plugin
           :name="item.name"
           :plugin="item.plugin"
+          :url="item.url"
           @changeEnabled="changeEnabled(item.name, $event)"
           @changeConfig="changeConfig(item.name, $event)"
         />
@@ -36,7 +37,7 @@ export default defineComponent({
   beforeMount() {
     try {
       this.getPluginsmap();
-      //this.getPluginsjson();
+      this.getPluginsjson();
     } catch (error) {
       console.log(error);
     }
@@ -57,7 +58,7 @@ export default defineComponent({
     importPlugin(key, url) {
       console.log(key, url);
       System.import(url).then((module) => {
-        console.log(module);
+        module.init(__webpack_require__.S["default"]);
         module.get("default").then((plugin) => {
           this.plugins.push({
             name: key,
@@ -66,12 +67,7 @@ export default defineComponent({
             enabled: false,
             config: {},
           });
-          console.log(plugin().ui);
-        });
-
-        module.get("Widget").then((widget) => {
-          console.log(widget);
-          console.log(widget());
+          // System.register(key, plugin);
         });
       });
     },
@@ -81,7 +77,6 @@ export default defineComponent({
         const data = await res.json();
         for (const key in data.imports) {
           System.import(key).then((plugin) => {
-            console.log(plugin);
             this.plugins.push({
               name: key,
               url: data.imports[key],
@@ -98,7 +93,7 @@ export default defineComponent({
         const res = await fetch(this.pluginsjson);
         const data = await res.json();
         for (const key in data.plugins) {
-          let url = data.imports[key];
+          let url = data.plugins[key];
           this.importPlugin(key, url);
         }
       }

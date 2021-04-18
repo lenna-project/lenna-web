@@ -14,7 +14,9 @@ module.exports = (env = {}) => ({
     minimize: false,
   },
   target: "web",
-  entry: path.resolve(__dirname, "./src/main.js"),
+  entry: {
+    "lenna-web": path.join(__dirname, 'src/main.js'),
+  },
   // output: {
   //   path: path.resolve(__dirname, './dist'),
   //   publicPath: '/dist/'
@@ -63,36 +65,19 @@ module.exports = (env = {}) => ({
     }),
     new ModuleFederationPlugin({
       name: "lenna-web",
+      library: { type: 'amd', name: 'lenna-web' },
       shared: {
         vue: {
           requiredVersion: deps.vue,
-          import: "vue",
           shareKey: "vue",
           shareScope: "default",
-          singleton: true,
-          eager: true
-        },
-        "vue-draggable-next": {
-          requiredVersion: deps["vue-draggable-next"],
-          import: "vue-draggable-next",
-          shareKey: "vue-draggable-next",
-          shareScope: "default",
-          singleton: true,
-          eager: true
-        },
-        "vue-upload-component": {
-          requiredVersion:  deps["vue-upload-component"],
-          import: "vue-upload-component",
-          shareKey: "vue-upload-component",
-          shareScope: "default",
-          singleton: true,
-          eager: true
+          //singleton: true,
+          //eager: true
         },
       },
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "./index.html"),
-      chunks: ["main"],
+      template: path.resolve(__dirname, "./index.html")
     }),
     new VueLoaderPlugin(),
     new CopyPlugin({
