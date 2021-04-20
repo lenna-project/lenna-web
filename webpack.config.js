@@ -27,6 +27,7 @@ module.exports = (env = {}) => ({
   resolve: {
     extensions: [".vue", ".jsx", ".js", ".json"],
     alias: {
+      '@': path.join(__dirname, 'src/'),
       // this isn't technically needed, since the default `vue` entry for bundlers
       // is a simple `export * from '@vue/runtime-dom`. However having this
       // extra re-export somehow causes webpack to always invalidate the module
@@ -74,6 +75,7 @@ module.exports = (env = {}) => ({
           //singleton: true,
           //eager: true
         },
+        "vue-router": deps["vue-router"]
       },
     }),
     new HtmlWebpackPlugin({

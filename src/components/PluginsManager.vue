@@ -41,7 +41,7 @@ export default defineComponent({
     } catch (error) {
       console.log(error);
     }
-    this.importPlugin("canny", "http://localhost:3002/remoteEntry.js");
+    this.importPlugin("filter", "http://localhost:3002/remoteEntry.js");
   },
   methods: {
     changeEnabled(name, enabled) {
@@ -56,7 +56,6 @@ export default defineComponent({
       return comp;
     },
     importPlugin(key, url) {
-      console.log(key, url);
       System.import(url).then((module) => {
         module.init(__webpack_require__.S["default"]);
         module.get("default").then((plugin) => {
@@ -67,7 +66,6 @@ export default defineComponent({
             enabled: false,
             config: {},
           });
-          // System.register(key, plugin);
         });
       });
     },
