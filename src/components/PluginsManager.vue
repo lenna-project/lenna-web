@@ -17,7 +17,7 @@
 <script>
 import { defineComponent } from "vue";
 import { VueDraggableNext } from "vue-draggable-next";
-import Plugin from "./Plugin.vue";
+import Plugin from "@/components/Plugin.vue";
 
 export default defineComponent({
   name: "PluginsManager",
@@ -59,13 +59,14 @@ export default defineComponent({
       System.import(url).then((module) => {
         module.init(__webpack_require__.S["default"]);
         module.get("default").then((plugin) => {
-          this.plugins.push({
+          let pluginConfig = {
             name: key,
             url: url,
             plugin: plugin(),
             enabled: false,
             config: {},
-          });
+          };
+          this.plugins.push(pluginConfig);
         });
       });
     },
@@ -75,13 +76,14 @@ export default defineComponent({
         const data = await res.json();
         for (const key in data.imports) {
           System.import(key).then((plugin) => {
-            this.plugins.push({
+            let pluginConfig = {
               name: key,
               url: data.imports[key],
               plugin: plugin,
               enabled: false,
               config: {},
-            });
+            };
+            this.plugins.push(pluginConfig);
           });
         }
       }

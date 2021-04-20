@@ -11,18 +11,18 @@
     </h1>
     {{ plugin.description() }}
     <div v-if="enabled">
-      <div v-if="ui && defaultConfig">
+      <div v-if="ui && config">
         <component
           :key="pluginKey"
           :is="ui"
-          :defaultConfig="defaultConfig"
+          :defaultConfig="config"
           @changeConfig="updateConfig($event)"
         ></component>
       </div>
       <div v-else>
         <PluginConfig
           :key="pluginKey"
-          :defaultConfig="defaultConfig"
+          :defaultConfig="config"
           @changeConfig="updateConfig($event)"
         />
       </div>
@@ -33,6 +33,7 @@
 <script>
 import { shallowRef } from "vue";
 import PluginConfig from "./PluginConfig.vue";
+import { loadConfig, saveConfig } from "@/config";
 
 const createUI = (name, component) => {
   return component;
@@ -55,13 +56,18 @@ export default {
       enabled: false,
       keyCounter: 0,
       pluginKey: "",
-      defaultConfig: null,
+      config: null,
     };
   },
   methods: {
     async loadDefaultConfig() {
-      this.plugin.defaultConfig().then((config) => {
-        this.defaultConfig = config;
+      this.plugin.defaultConfig().then((defaultConfig) => {
+        const { enabled, config } = loadConfig({
+          name: this.name,
+          config: defaultConfig,
+        });
+        this.config = config;
+        this.enabled = enabled;
       });
     },
     async loadUI() {
@@ -77,9 +83,19 @@ export default {
       }
     },
     async updateConfig(config) {
+      saveConfig({
+        name: this.name,
+        enabled: this.enabled,
+        config: config,
+      });
       this.$emit("changeConfig", config);
     },
     async updateEnabled(enabled) {
+      saveConfig({
+        name: this.name,
+        enabled: this.enabled,
+        config: this.config,
+      });
       this.$emit("changeEnabled", enabled);
     },
   },
