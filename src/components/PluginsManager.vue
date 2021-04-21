@@ -6,6 +6,7 @@
           :name="item.name"
           :plugin="item.plugin"
           :url="item.url"
+          :defaultConfig="defaultConfig"
           @changeEnabled="changeEnabled(item.name, $event)"
           @changeConfig="changeConfig(item.name, $event)"
         />
@@ -24,6 +25,7 @@ export default defineComponent({
   props: {
     pluginsmap: String,
     pluginsjson: String,
+    defaultConfig: Object,
   },
   components: {
     Plugin,

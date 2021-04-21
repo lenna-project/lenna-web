@@ -16,4 +16,15 @@ const loadConfig = (plugin) => {
   return plugin;
 };
 
-export { saveConfig, loadConfig };
+const loadConfigFromParams = (plugin, params) => {
+  params.forEach((config) => {
+    if (config.name === plugin.name) {
+      console.log(config);
+      plugin.enabled = config.enabled;
+      plugin.config = Object.assign(plugin.config, config.config);
+    }
+  });
+  return plugin;
+};
+
+export { saveConfig, loadConfig, loadConfigFromParams };

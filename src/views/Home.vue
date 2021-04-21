@@ -7,11 +7,13 @@
       </button>
       <PluginsManager
         ref="pluginsManager"
+        :defaultConfig="defaultConfig"
         pluginsmap="https://lenna.app/lenna-plugins/importmap.json"
         pluginsjson="https://lenna.app/lenna-plugins/plugins.json"
       />
     </div>
     <ImagePreview :images="resultImages" />
+    <Config v-if="pluginsManager" :plugins="pluginsManager.plugins" />
   </div>
 </template>
 
@@ -21,6 +23,7 @@ import * as NProgress from "nprogress";
 import PluginsManager from "@/components/PluginsManager.vue";
 import ImageUpload from "@/components/ImageUpload.vue";
 import ImagePreview from "@/components/ImagePreview.vue";
+import Config from "@/components/Config.vue";
 
 export default defineComponent({
   name: "Home",
@@ -28,9 +31,11 @@ export default defineComponent({
     PluginsManager,
     ImageUpload,
     ImagePreview,
+    Config,
   },
   data() {
     return {
+      defaultConfig: null,
       resultImage: null,
       sourceImage: null,
       sourceImages: [],
@@ -44,8 +49,9 @@ export default defineComponent({
     };
   },
   created() {
-    let config = this.$route.query.config;
-    console.log(config);
+    if (this.$route.query.config) {
+      this.defaultConfig = JSON.parse(atob(this.$route.query.config));
+    }
   },
   methods: {
     changeImages(files) {

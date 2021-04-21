@@ -33,7 +33,7 @@
 <script>
 import { shallowRef } from "vue";
 import PluginConfig from "./PluginConfig.vue";
-import { loadConfig, saveConfig } from "@/config";
+import { loadConfig, loadConfigFromParams, saveConfig } from "@/config";
 
 const createUI = (name, component) => {
   return component;
@@ -45,6 +45,7 @@ export default {
     name: String,
     plugin: Object,
     url: String,
+    defaultConfig: Object,
   },
   components: {
     PluginConfig,
@@ -62,12 +63,24 @@ export default {
   methods: {
     async loadDefaultConfig() {
       this.plugin.defaultConfig().then((defaultConfig) => {
-        const { enabled, config } = loadConfig({
-          name: this.name,
-          config: defaultConfig,
-        });
-        this.config = config;
-        this.enabled = enabled;
+        if (this.defaultConfig) {
+          const { enabled, config } = loadConfigFromParams(
+            {
+              name: this.name,
+              config: defaultConfig,
+            },
+            this.defaultConfig
+          );
+          this.config = config;
+          this.enabled = enabled;
+        } else {
+          const { enabled, config } = loadConfig({
+            name: this.name,
+            config: defaultConfig,
+          });
+          this.config = config;
+          this.enabled = enabled;
+        }
       });
     },
     async loadUI() {
