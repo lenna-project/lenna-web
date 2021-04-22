@@ -26,6 +26,7 @@ export default defineComponent({
     pluginsmap: String,
     pluginsjson: String,
     defaultConfig: Object,
+    defaultPlugins: Array
   },
   components: {
     Plugin,
@@ -42,6 +43,11 @@ export default defineComponent({
       this.getPluginsjson();
     } catch (error) {
       console.log(error);
+    }
+    if(this.defaultPlugins) {
+      this.defaultPlugins.forEach(plugin => {
+        this.importPlugin(plugin, plugin);
+      })
     }
     this.importPlugin("filter", "http://localhost:3002/remoteEntry.js");
   },

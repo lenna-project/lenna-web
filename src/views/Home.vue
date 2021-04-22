@@ -8,6 +8,7 @@
       <PluginsManager
         ref="pluginsManager"
         :defaultConfig="defaultConfig"
+        :defaultPlugins="defaultPlugins"
         pluginsmap="https://lenna.app/lenna-plugins/importmap.json"
         pluginsjson="https://lenna.app/lenna-plugins/plugins.json"
       />
@@ -36,6 +37,7 @@ export default defineComponent({
   data() {
     return {
       defaultConfig: null,
+      defaultPlugins: null,
       resultImage: null,
       sourceImage: null,
       sourceImages: [],
@@ -51,6 +53,10 @@ export default defineComponent({
   created() {
     if (this.$route.query.config) {
       this.defaultConfig = JSON.parse(atob(this.$route.query.config));
+    }
+    if (this.$route.query.plugin) {
+      this.defaultPlugins = [this.$route.query.plugin];
+      
     }
   },
   methods: {
