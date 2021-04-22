@@ -1,4 +1,11 @@
 <template>
+  <Slide>
+    <button v-on:click="loadPlugin(pluginUrl)">add plugin</button>
+    <input
+      v-model="pluginUrl"
+      placeholder="https://lenna.app/lenna-plugins/desaturate/remoteEntry.js"
+    />
+  </Slide>
   <div class="main">
     <ImageUpload @changeImage="changeImages($event)" />
     <div id="process">
@@ -21,6 +28,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import * as NProgress from "nprogress";
+import { Slide } from "vue3-burger-menu";
 import PluginsManager from "@/components/PluginsManager.vue";
 import ImageUpload from "@/components/ImageUpload.vue";
 import ImagePreview from "@/components/ImagePreview.vue";
@@ -29,6 +37,7 @@ import Config from "@/components/Config.vue";
 export default defineComponent({
   name: "Home",
   components: {
+    Slide,
     PluginsManager,
     ImageUpload,
     ImagePreview,
@@ -36,6 +45,7 @@ export default defineComponent({
   },
   data() {
     return {
+      pluginUrl: "",
       defaultConfig: null,
       defaultPlugins: null,
       resultImage: null,
@@ -56,10 +66,13 @@ export default defineComponent({
     }
     if (this.$route.query.plugin) {
       this.defaultPlugins = [this.$route.query.plugin];
-      
     }
   },
   methods: {
+    loadPlugin(pluginUrl) {
+      console.log(pluginUrl);
+      this.pluginsManager.importPlugin(pluginUrl, pluginUrl);
+    },
     changeImages(files) {
       this.sourceImage = files.file;
       this.sourceImages.push(this.sourceImage);
@@ -97,17 +110,19 @@ export default defineComponent({
 
 <style scoped lang="css">
 @import "//unpkg.com/nprogress@0.2.0/nprogress.css";
+button {
+  color: white;
+  background-color: #9c3c53;
+  border: 2px solid darkgray;
+  border-radius: 15px;
+}
 .main {
   padding: 100px;
   display: flex;
   background-color: #5a0d33;
 }
-button {
+.main button {
   width: 350px;
-  color: white;
-  background-color: #9c3c53;
-  border: 2px solid darkgray;
-  border-radius: 15px;
   font-size: 24pt;
   padding: 10px;
 }
