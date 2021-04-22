@@ -1,4 +1,5 @@
 <template>
+  <div id="circle"></div>
   <Slide>
     <button v-on:click="loadPlugin(pluginUrl)">add plugin</button>
     <input
@@ -110,6 +111,19 @@ export default defineComponent({
 
 <style scoped lang="css">
 @import "//unpkg.com/nprogress@0.2.0/nprogress.css";
+#circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid #5a0d33;
+  background-color: #723d67;
+  position: absolute;
+  top: -25px;
+  left: -25px;
+}
+#circle:hover {
+  transform: scale(1.1);
+}
 button {
   color: white;
   background-color: #9c3c53;

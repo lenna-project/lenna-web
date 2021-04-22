@@ -20,7 +20,7 @@ export default {
   padding: 0;
   overflow: hidden;
   background-color: #723d67;
-justify-content: flex-end;
+  justify-content: flex-end;
   display: flex;
 }
 
