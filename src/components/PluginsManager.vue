@@ -26,7 +26,7 @@ export default defineComponent({
     pluginsmap: String,
     pluginsjson: String,
     defaultConfig: Object,
-    defaultPlugins: Array
+    defaultPlugins: Array,
   },
   components: {
     Plugin,
@@ -44,10 +44,10 @@ export default defineComponent({
     } catch (error) {
       console.log(error);
     }
-    if(this.defaultPlugins) {
-      this.defaultPlugins.forEach(plugin => {
+    if (this.defaultPlugins) {
+      this.defaultPlugins.forEach((plugin) => {
         this.importPlugin(plugin, plugin);
-      })
+      });
     }
     this.importPlugin("filter", "http://localhost:3002/remoteEntry.js");
   },
@@ -112,6 +112,10 @@ export default defineComponent({
 
 <style>
 .plugins-manager {
+  margin: 10px;
   background-color: #e1b5a2;
+  border: 1px solid darkgray;
+  border-radius: 5px;
+  box-shadow: 10px 5px 5px white;
 }
 </style>

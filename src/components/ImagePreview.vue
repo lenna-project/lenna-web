@@ -41,6 +41,7 @@ export default {
   border-radius: 5px;
   overflow-y: scroll;
   overflow-x: hidden;
+  box-shadow: 10px 5px 5px white;
 }
 
 .image-preview img {

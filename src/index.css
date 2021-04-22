@@ -1,3 +1,9 @@
 #app {
   color: black;
 }
+button {
+  color: white;
+  background-color: #9c3c53;
+  border: 2px solid darkgray;
+  border-radius: 15px;
+}

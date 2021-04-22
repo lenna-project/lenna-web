@@ -6,6 +6,8 @@
       v-model="pluginUrl"
       placeholder="https://lenna.app/lenna-plugins/desaturate/remoteEntry.js"
     />
+    <br/>
+    <Config v-if="pluginsManager" :plugins="pluginsManager.plugins" />
   </Slide>
   <div class="main">
     <ImageUpload @changeImage="changeImages($event)" />
@@ -22,7 +24,6 @@
       />
     </div>
     <ImagePreview :images="resultImages" />
-    <Config v-if="pluginsManager" :plugins="pluginsManager.plugins" />
   </div>
 </template>
 
@@ -108,7 +109,6 @@ export default defineComponent({
   },
 });
 </script>
-
 <style scoped lang="css">
 @import "//unpkg.com/nprogress@0.2.0/nprogress.css";
 #circle {
@@ -123,12 +123,6 @@ export default defineComponent({
 }
 #circle:hover {
   transform: scale(1.1);
-}
-button {
-  color: white;
-  background-color: #9c3c53;
-  border: 2px solid darkgray;
-  border-radius: 15px;
 }
 .main {
   padding: 100px;

@@ -62,6 +62,7 @@ export default defineComponent({
   background-color: #e1b5a2;
   border: 1px solid darkgray;
   border-radius: 5px;
+  box-shadow: 10px 5px 5px white;
 }
 .file-upload {
   margin: 10px;
