@@ -70,7 +70,6 @@ export default {
       handler() {
         this.imgs = [];
         this.index = 0;
-        console.log(this.images);
         this.images.forEach((image) => {
           this.imgs.push(this.createObjectURL(image));
         });

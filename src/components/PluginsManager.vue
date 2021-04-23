@@ -19,6 +19,7 @@
 import { defineComponent } from "vue";
 import { VueDraggableNext } from "vue-draggable-next";
 import Plugin from "@/components/Plugin.vue";
+import { loadConfig } from "../config";
 
 export default defineComponent({
   name: "PluginsManager",
@@ -74,6 +75,7 @@ export default defineComponent({
             enabled: false,
             config: {},
           };
+          pluginConfig = loadConfig(pluginConfig);
           this.plugins.push(pluginConfig);
         });
       });
@@ -91,6 +93,7 @@ export default defineComponent({
               enabled: false,
               config: {},
             };
+            pluginConfig = loadConfig(pluginConfig);
             this.plugins.push(pluginConfig);
           });
         }
