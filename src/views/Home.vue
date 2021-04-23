@@ -91,7 +91,7 @@ export default defineComponent({
           this.resultImages.push(image);
         });
       }
-      this.imageUpload.image = null;
+      this.imageUpload.images = [];
       this.sourceImage = null;
       this.sourceImages = [];
     },

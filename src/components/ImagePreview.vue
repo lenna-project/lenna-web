@@ -95,5 +95,6 @@ export default {
   min-width: 400px;
   min-height: 500px;
   max-width: 640px;
+  overflow-y: scroll;
 }
 </style>
