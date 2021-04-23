@@ -1,5 +1,14 @@
 <template>
   <div v-if="images.length > 0" class="image-preview">
+    <select v-model="filetype">
+      <option
+        v-for="option in options"
+        :value="option.value"
+        :key="option.text"
+      >
+        {{ option.text }}
+      </option>
+    </select>
     <button v-on:click="downloadZip">Download as ZIP</button>
     <br />
     <div class="image-container">
@@ -27,6 +36,7 @@
 import VueEasyLightbox from "vue-easy-lightbox";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
+import { compress, compressAccurately } from "image-conversion";
 export default {
   components: {
     VueEasyLightbox,
@@ -39,6 +49,11 @@ export default {
       imgs: [],
       visible: false,
       index: 0,
+      filetype: "png",
+      options: [
+        { text: "png", value: "png" },
+        { text: "jpg", value: "jpg" },
+      ],
     };
   },
   methods: {
@@ -47,9 +62,19 @@ export default {
     },
     async downloadZip() {
       let zip = new JSZip();
-      this.images.forEach((image, index) => {
-        zip.file(`${image.name.replace(/(\.[^/.]+)+$/, "")}.png`, image);
+      let promises = this.images.map((image) => {
+        let type = `image/${this.filetype}`;
+        return compress(image, { quality: 0.90, type: type }).then(
+          (compressed_image) => {
+            let file = new File([compressed_image], image.name, { type });
+            return zip.file(
+              `${image.name.replace(/(\.[^/.]+)+$/, "")}.${this.filetype}`,
+              file
+            );
+          }
+        );
       });
+      await Promise.all(promises);
       zip.generateAsync({ type: "blob" }).then(function (blob) {
         saveAs(blob, "images.zip");
       });
