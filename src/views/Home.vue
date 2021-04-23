@@ -10,7 +10,9 @@
     <Config v-if="pluginsManager" :plugins="pluginsManager.plugins" />
   </Slide>
   <div class="main">
-    <ImageUpload @changeImage="changeImages($event)" />
+    <ImageUpload 
+    ref="imageUpload"
+    @changeImage="changeImages($event)" />
     <div id="process">
       <button v-if="sourceImage" v-on:click="processImages">
         >>process image>>
@@ -57,9 +59,11 @@ export default defineComponent({
     };
   },
   setup: () => {
+    const imageUpload = ref(null);
     const pluginsManager = ref(null);
     return {
-      pluginsManager,
+      imageUpload,
+      pluginsManager
     };
   },
   created() {
@@ -87,6 +91,7 @@ export default defineComponent({
           this.resultImages.push(image);
         });
       }
+      this.imageUpload.image = null;
       this.sourceImage = null;
       this.sourceImages = [];
     },
