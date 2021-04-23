@@ -6,15 +6,13 @@
       v-model="pluginUrl"
       placeholder="https://lenna.app/lenna-plugins/desaturate/remoteEntry.js"
     />
-    <br/>
+    <br />
     <Config v-if="pluginsManager" :plugins="pluginsManager.plugins" />
   </Slide>
   <div class="main">
-    <ImageUpload 
-    ref="imageUpload"
-    @changeImage="changeImages($event)" />
+    <ImageUpload ref="imageUpload" @changeImage="changeImages($event)" />
     <div id="process">
-      <button v-if="sourceImage" v-on:click="processImages">
+      <button v-if="sourceImages.length > 0" v-on:click="processImages">
         >>process image>>
       </button>
       <PluginsManager
@@ -52,8 +50,6 @@ export default defineComponent({
       pluginUrl: "",
       defaultConfig: null,
       defaultPlugins: null,
-      resultImage: null,
-      sourceImage: null,
       sourceImages: [],
       resultImages: [],
     };
@@ -63,7 +59,7 @@ export default defineComponent({
     const pluginsManager = ref(null);
     return {
       imageUpload,
-      pluginsManager
+      pluginsManager,
     };
   },
   created() {
@@ -76,23 +72,22 @@ export default defineComponent({
   },
   methods: {
     loadPlugin(pluginUrl) {
-      console.log(pluginUrl);
+      console.log("loaded plugin: ", pluginUrl);
       this.pluginsManager.importPlugin(pluginUrl, pluginUrl);
     },
     changeImages(files) {
-      this.sourceImage = files.file;
-      this.sourceImages.push(this.sourceImage);
+      this.sourceImages.push(files.file);
     },
     async processImages() {
       this.resultImages = [];
       for (let sourceImage of this.sourceImages) {
         this.process(sourceImage).then((image) => {
-          this.resultImage = image;
-          this.resultImages.push(image);
+          console.log(image);
+          let file = new File([image], sourceImage.name, { type: "image/png" });
+          this.resultImages.push(file);
         });
       }
       this.imageUpload.images = [];
-      this.sourceImage = null;
       this.sourceImages = [];
     },
     async process(imageFile) {

@@ -48,7 +48,7 @@ export default {
     async downloadZip() {
       let zip = new JSZip();
       this.images.forEach((image, index) => {
-        zip.file(`image${index}.png`, image);
+        zip.file(`${image.name.replace(/(\.[^/.]+)+$/, "")}.png`, image);
       });
       zip.generateAsync({ type: "blob" }).then(function (blob) {
         saveAs(blob, "images.zip");
