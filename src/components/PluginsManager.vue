@@ -50,7 +50,7 @@ export default defineComponent({
         this.importPlugin(plugin, plugin);
       });
     }
-    this.importPlugin("filter", "http://localhost:3002/remoteEntry.js");
+    //this.importPlugin("local", "http://localhost:3002/remoteEntry.js");
   },
   methods: {
     changeEnabled(name, enabled) {
