@@ -27,4 +27,9 @@ const loadConfigFromParams = (plugin, params) => {
   return plugin;
 };
 
-export { saveConfig, loadConfig, loadConfigFromParams };
+const listPlugins = () => {
+  let plugins = localStorage.getItem("plugins") || "[]";
+  return JSON.parse(plugins);
+}
+
+export { saveConfig, loadConfig, loadConfigFromParams, listPlugins };

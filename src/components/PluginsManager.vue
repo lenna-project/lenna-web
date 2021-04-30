@@ -19,7 +19,7 @@
 import { defineComponent } from "vue";
 import { VueDraggableNext } from "vue-draggable-next";
 import Plugin from "@/components/Plugin.vue";
-import { loadConfig } from "../config";
+import { loadConfig, listPlugins } from "../config";
 
 export default defineComponent({
   name: "PluginsManager",
@@ -50,6 +50,9 @@ export default defineComponent({
         this.importPlugin(plugin, plugin);
       });
     }
+    listPlugins().forEach((plugin) => {
+      this.importPlugin(plugin, plugin);
+    })
     //this.importPlugin("local", "http://localhost:3002/remoteEntry.js");
   },
   methods: {

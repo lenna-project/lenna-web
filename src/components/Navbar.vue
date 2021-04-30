@@ -1,6 +1,7 @@
 <template>
   <div class="navbar">
     <router-link to="/">Home</router-link>
+    <a href="marketplace">Marketplace</a>
     <a href="https://github.com/lenna-project">Github</a>
     <router-link to="/about">About</router-link>
   </div>
