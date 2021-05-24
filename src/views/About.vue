@@ -7,11 +7,23 @@
     </p>
     <h2>Plugins</h2>
     <p>
-      Lenna allows to plug in more algorithms. Some examples can be found at
+      Lenna allows to plug in more algorithms. 
+      The plugins can be activated for use in the <a href="https://lenna.app/marketplace/">marketplace</a>. 
+      Some examples can be found at
       <a href="https://github.com/lenna-project/lenna-plugins"
         >lenna-project/lenna-plugins</a
       >
       on github.
+      <br/>
+      Following a list of available plugins:
+
+      <ul>
+      <li><b>blur</b> - Blurs the image. The strength can be configured.</li>
+      <li><b>dramatic</b> - Gives the image a dramatic touch.</li>
+      <li><b>exif</b> - Allows to clear exif data of the image.</li>
+      <li><b>rotate</b> - Rotates the image.</li>
+      <li><b>canny</b> - Shows edges of objects in the image.</li>
+      </ul>
     </p>
     <h2>Command Line Interface</h2>
     <p>
