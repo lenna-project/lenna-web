@@ -81,6 +81,11 @@ module.exports = (env = {}) => ({
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "./index.html")
     }),
+    new HtmlWebpackPlugin({
+      title: "lenna-web-about",
+      template: path.resolve(__dirname, "./index.html"),
+      filename: './about/index.html'
+    }),
     new VueLoaderPlugin(),
     new CopyPlugin({
       patterns: [
