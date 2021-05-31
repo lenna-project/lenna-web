@@ -60,19 +60,33 @@ export default {
     createObjectURL(image) {
       return URL.createObjectURL(image);
     },
+    async safeImage(cli, file, format) {
+      let data = await file
+        .arrayBuffer()
+        .then((image) => new Uint8Array(image));
+      return cli.save(data, format);
+    },
     async downloadZip() {
+      let cli = await System.import(
+        "https://lenna.app/lenna-cli/remoteEntry.js"
+      ).then((module) => {
+        module.init(__webpack_require__.S["default"]);
+        return module.get("default").then((cli) => {
+          return cli();
+        });
+      });
+
       let zip = new JSZip();
       let promises = this.images.map((image) => {
         let type = `image/${this.filetype}`;
-        return compress(image, { quality: 0.90, type: type }).then(
-          (compressed_image) => {
-            let file = new File([compressed_image], image.name, { type });
-            return zip.file(
-              `${image.name.replace(/(\.[^/.]+)+$/, "")}.${this.filetype}`,
-              file
-            );
-          }
-        );
+
+        return this.safeImage(cli, image, this.filetype).then((compressed_image) => {
+          let file = new File([compressed_image], image.name, { type });
+          return zip.file(
+            `${image.name.replace(/(\.[^/.]+)+$/, "")}.${this.filetype}`,
+            file
+          );
+        });
       });
       await Promise.all(promises);
       zip.generateAsync({ type: "blob" }).then(function (blob) {

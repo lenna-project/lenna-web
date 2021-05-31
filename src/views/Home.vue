@@ -82,7 +82,6 @@ export default defineComponent({
       this.resultImages = [];
       for (let sourceImage of this.sourceImages) {
         this.process(sourceImage).then((image) => {
-          console.log(image);
           let file = new File([image], sourceImage.name, { type: "image/png" });
           this.resultImages.push(file);
         });
@@ -101,10 +100,10 @@ export default defineComponent({
           img = await plugin.plugin.process(plugin.config, img);
         }
       }
-      const blob = new Blob([img], { type: "image/png" });
+      
       NProgress.done();
       NProgress.remove();
-      return blob;
+      return img;
     },
   },
 });

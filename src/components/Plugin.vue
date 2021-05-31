@@ -89,7 +89,6 @@ export default {
           .then((module) => {
             module.get("./Widget").then((widget) => {
               this.ui = createUI(this.name, widget().default);
-              console.log(this.ui);
             });
           })
           .catch((e) => console.log(e));
