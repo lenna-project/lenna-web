@@ -12,7 +12,7 @@
       ref="upload"
       class="file-upload"
     >
-      <h3>Drop or select files</h3></FileUpload
+      <h3>DROP<br/>OR<br/>SELECT FILES</h3></FileUpload
     >
     <div class="image-container">
       <div
@@ -82,30 +82,30 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped>
+<style scoped lang="scss">
+@import "@/styles/_variables.scss";
 .image-upload {
   margin: 10px;
-  width: 400px;
-  height: 550px;
-  background-color: #e1b5a2;
-  border: 1px solid darkgray;
-  border-radius: 5px;
-  box-shadow: 10px 5px 5px white;
+  width: 300px;
+  height: 350px;
+  background-color: $body_background;
+  border: 2px solid black;
+  border-radius: 10px;
+  box-shadow: 10px 5px 5px $shadow;
+  align-items: center;
+  text-align: center;
 }
 .file-upload {
   margin: 10px;
-  width: 200px;
-  height: 200px;
-  border: 1px solid black;
-  border-radius: 5px;
+  height: 25%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .image-container {
-  height: 300px;
+  height: 200px;
   display: flex;
   flex-wrap: wrap;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 </style>

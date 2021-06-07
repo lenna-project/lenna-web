@@ -1,5 +1,6 @@
 <template>
   <div class="plugin" v-if="plugin">
+    <img id="icon" v-if="icon" :src="icon" />
     <h1>
       <input
         type="checkbox"
@@ -53,6 +54,7 @@ export default {
   data() {
     return {
       ui: shallowRef(null),
+      icon: shallowRef(null),
       processor: null,
       enabled: false,
       keyCounter: 0,
@@ -93,6 +95,9 @@ export default {
           })
           .catch((e) => console.log(e));
       }
+      if (this.plugin.icon) {
+        this.icon = this.plugin.icon();
+      }
     },
     async updateConfig(config) {
       saveConfig({
@@ -125,13 +130,21 @@ export default {
   },
 };
 </script>
-
-<style scoped>
+<style scoped lang="scss">
+@import "@/styles/_variables.scss";
 .plugin {
   margin: 10px;
-  width: 500px;
-  background-color: #efcda4;
-  border: 1px solid darkgray;
+  padding: 5px;
+  min-width: 200px;
+  min-height: 200px;
+  background-color: white;
   border-radius: 5px;
+  box-shadow: 5px 5px 5px $shadow;
+  text-align: center;
+}
+#icon {
+  margin: 10px;
+  width: 48px;
+  height: 48px;
 }
 </style>

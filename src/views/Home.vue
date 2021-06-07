@@ -10,20 +10,25 @@
     <Config v-if="pluginsManager" :plugins="pluginsManager.plugins" />
   </Slide>
   <div class="main">
-    <ImageUpload ref="imageUpload" @changeImage="changeImages($event)" />
-    <div id="process">
-      <button v-if="sourceImages.length > 0" v-on:click="processImages">
-        >>process image>>
-      </button>
-      <PluginsManager
-        ref="pluginsManager"
-        :defaultConfig="defaultConfig"
-        :defaultPlugins="defaultPlugins"
-        pluginsmap="https://lenna.app/lenna-plugins/importmap.json"
-        pluginsjson="https://lenna.app/lenna-plugins/plugins.json"
-      />
+    <h1>Convert images online without upload of your data</h1>
+    <div class="top_main">
+      <ImageUpload ref="imageUpload" @changeImage="changeImages($event)" />
+      <div id="process">
+        <button v-on:click="processImages">
+          PROCESS IMAGE
+        </button>
+      </div>
+      <ImagePreview :images="resultImages" />
     </div>
-    <ImagePreview :images="resultImages" />
+    <div class="bottom_main">
+    <PluginsManager
+      ref="pluginsManager"
+      :defaultConfig="defaultConfig"
+      :defaultPlugins="defaultPlugins"
+      pluginsmap="https://lenna.app/lenna-plugins/importmap.json"
+      pluginsjson="https://lenna.app/lenna-plugins/plugins.json"
+    />
+    </div>
   </div>
 </template>
 
@@ -100,7 +105,7 @@ export default defineComponent({
           img = await plugin.plugin.process(plugin.config, img);
         }
       }
-      
+
       NProgress.done();
       NProgress.remove();
       return img;
@@ -108,14 +113,15 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped lang="css">
+<style scoped lang="scss">
+@import "@/styles/_variables.scss";
 @import "//unpkg.com/nprogress@0.2.0/nprogress.css";
 #circle {
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  border: 2px solid #5a0d33;
-  background-color: #723d67;
+  border: 2px solid $shadow;
+  background-color: $body_background;
   position: absolute;
   top: -25px;
   left: -25px;
@@ -124,13 +130,28 @@ export default defineComponent({
   transform: scale(1.1);
 }
 .main {
+  background-color: $body_background;
   padding: 100px;
-  display: flex;
-  background-color: #5a0d33;
+  text-align: center;
 }
-.main button {
+.main h1 {
+  text-transform: uppercase;
+}
+.top_main {
+  display: flex;
+  justify-content: space-between;
+}
+.bottom_main {
+  padding-top: 20px;
+  padding-bottom: 0;
+}
+#process button {
+  margin-top: 50%;
   width: 350px;
+  align-self: center;
   font-size: 24pt;
   padding: 10px;
+  border-radius: 30px;
+  box-shadow: 5px 5px 5px $shadow;
 }
 </style>

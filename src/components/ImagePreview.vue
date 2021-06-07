@@ -1,15 +1,17 @@
 <template>
-  <div v-if="images.length > 0" class="image-preview">
-    <select v-model="filetype">
-      <option
-        v-for="option in options"
-        :value="option.value"
-        :key="option.text"
-      >
-        {{ option.text }}
-      </option>
-    </select>
-    <button v-on:click="downloadZip">Download as ZIP</button>
+  <div class="image-preview">
+    <div id="save" v-on:click="downloadZip">
+      <select v-model="filetype">
+        <option
+          v-for="option in options"
+          :value="option.value"
+          :key="option.text"
+        >
+          {{ option.text }}
+        </option>
+      </select>
+      <p>SAVE FILE</p>
+    </div>
     <br />
     <div class="image-container">
       <div
@@ -31,12 +33,10 @@
     ></vue-easy-lightbox>
   </div>
 </template>
-    
 <script lang="ts">
 import VueEasyLightbox from "vue-easy-lightbox";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
-import { compress, compressAccurately } from "image-conversion";
 export default {
   components: {
     VueEasyLightbox,
@@ -80,13 +80,15 @@ export default {
       let promises = this.images.map((image) => {
         let type = `image/${this.filetype}`;
 
-        return this.safeImage(cli, image, this.filetype).then((compressed_image) => {
-          let file = new File([compressed_image], image.name, { type });
-          return zip.file(
-            `${image.name.replace(/(\.[^/.]+)+$/, "")}.${this.filetype}`,
-            file
-          );
-        });
+        return this.safeImage(cli, image, this.filetype).then(
+          (compressed_image) => {
+            let file = new File([compressed_image], image.name, { type });
+            return zip.file(
+              `${image.name.replace(/(\.[^/.]+)+$/, "")}.${this.filetype}`,
+              file
+            );
+          }
+        );
       });
       await Promise.all(promises);
       zip.generateAsync({ type: "blob" }).then(function (blob) {
@@ -119,20 +121,28 @@ export default {
   },
 };
 </script>
-<style scoped lang="css">
+<style scoped lang="scss">
+@import "@/styles/_variables.scss";
 .image-preview {
   margin: 10px;
-  background-color: #efcda4;
-  border: 1px solid darkgray;
-  border-radius: 5px;
-  box-shadow: 10px 5px 5px white;
+  width: 300px;
+  height: 350px;
+  background-color: $body_background;
+  border: 2px solid black;
+  border-radius: 10px;
+  box-shadow: 10px 5px 5px $shadow;
+  align-items: center;
+  text-align: center;
 }
 .image-container {
+  height: 200px;
   display: flex;
   flex-wrap: wrap;
-  min-width: 400px;
-  min-height: 500px;
-  max-width: 640px;
-  overflow-y: scroll;
+  overflow-y: auto;
+}
+#save {
+  cursor: pointer;
+  height: 100px;
+  padding: 10px;
 }
 </style>

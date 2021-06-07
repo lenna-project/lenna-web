@@ -12,28 +12,30 @@ export default {
   name: "Navbar",
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
+@import "@/styles/_variables.scss";
 .navbar {
   position: fixed;
   top: 0;
   width: 100%;
+  height: 100px;
   margin: 0;
-  padding: 0;
   overflow: hidden;
-  background-color: #723d67;
+  background-color: $nav_background;
   justify-content: flex-end;
   display: flex;
+  color: $text_color;
 }
 
 .navbar a {
   display: block;
-  color: white;
+  color: $text_color;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
 }
 
 .navbar a:hover {
-  background-color: #111;
+  background-color: $primary_color;
 }
 </style>

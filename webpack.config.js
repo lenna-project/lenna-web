@@ -15,7 +15,7 @@ module.exports = (env = {}) => ({
   },
   target: "web",
   entry: {
-    "lenna-web": path.join(__dirname, 'src/main.js'),
+    "lenna-web": path.join(__dirname, "src/main.js"),
   },
   // output: {
   //   path: path.resolve(__dirname, './dist'),
@@ -27,7 +27,7 @@ module.exports = (env = {}) => ({
   resolve: {
     extensions: [".vue", ".jsx", ".js", ".json"],
     alias: {
-      '@': path.join(__dirname, 'src/'),
+      "@": path.join(__dirname, "src/"),
       // this isn't technically needed, since the default `vue` entry for bundlers
       // is a simple `export * from '@vue/runtime-dom`. However having this
       // extra re-export somehow causes webpack to always invalidate the module
@@ -39,7 +39,21 @@ module.exports = (env = {}) => ({
     rules: [
       {
         test: /\.vue$/,
-        use: "vue-loader",
+        loader: "vue-loader",
+        options: {
+          loaders: {
+            scss: [
+              "vue-style-loader",
+              "css-loader",
+              {
+                loader: "sass-loader",
+                options: {
+                  includePaths: [path.resolve(__dirname, "src/styles")],
+                },
+              },
+            ],
+          },
+        },
       },
       {
         test: /\.png$/,
@@ -49,13 +63,15 @@ module.exports = (env = {}) => ({
         },
       },
       {
-        test: /\.css$/,
+        test: /\.(css|s[ac]ss)$/i,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: { hmr: !env.prod },
-          },
+          process.env.NODE_ENV !== "production"
+            ? "style-loader"
+            : MiniCssExtractPlugin.loader,
+          // Translates CSS into CommonJS
           "css-loader",
+          // Compiles Sass to CSS
+          "sass-loader",
         ],
       },
     ],
@@ -66,7 +82,7 @@ module.exports = (env = {}) => ({
     }),
     new ModuleFederationPlugin({
       name: "lenna-web",
-      library: { type: 'amd', name: 'lenna-web' },
+      library: { type: "amd", name: "lenna-web" },
       shared: {
         vue: {
           requiredVersion: deps.vue,
@@ -75,22 +91,20 @@ module.exports = (env = {}) => ({
           //singleton: true,
           //eager: true
         },
-        "vue-router": deps["vue-router"]
+        "vue-router": deps["vue-router"],
       },
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "./index.html")
+      template: path.resolve(__dirname, "./index.html"),
     }),
     new HtmlWebpackPlugin({
       title: "lenna-web-about",
       template: path.resolve(__dirname, "./index.html"),
-      filename: './about/index.html'
+      filename: "./about/index.html",
     }),
     new VueLoaderPlugin(),
     new CopyPlugin({
-      patterns: [
-        "public"
-      ],
+      patterns: ["public"],
     }),
   ],
   devServer: {

@@ -34,11 +34,12 @@
     </p>
   </div>
 </template>
-<style scoped lang="css">
+<style scoped lang="scss">
+@import "@/styles/_variables.scss";
 .about {
   padding: 100px;
   padding-left: 30%;
-  background-color: #efcda4;
+  background-color: $body_background;
   height: 100%;
 }
 </style>
