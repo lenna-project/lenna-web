@@ -15,10 +15,11 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/_variables.scss";
 .navbar {
+  padding: 20px;
   position: fixed;
   top: 0;
   width: 100%;
-  height: 100px;
+  height: 50px;
   margin: 0;
   overflow: hidden;
   background-color: $nav_background;
@@ -36,6 +37,10 @@ export default {
 }
 
 .navbar a:hover {
+  background-color: $primary_color;
+}
+.navbar .router-link-active {
+  color: white;
   background-color: $primary_color;
 }
 </style>

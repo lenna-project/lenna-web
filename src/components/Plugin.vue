@@ -135,8 +135,8 @@ export default {
 .plugin {
   margin: 10px;
   padding: 5px;
-  min-width: 200px;
-  min-height: 200px;
+  min-width: 250px;
+  min-height: 250px;
   background-color: white;
   border-radius: 5px;
   box-shadow: 5px 5px 5px $shadow;

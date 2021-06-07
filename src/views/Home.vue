@@ -131,7 +131,8 @@ export default defineComponent({
 }
 .main {
   background-color: $body_background;
-  padding: 100px;
+  padding: 150px;
+  padding-top: 100px;
   text-align: center;
 }
 .main h1 {

@@ -1,6 +1,6 @@
 <template>
   <div class="plugins-manager">
-    <draggable class="dragArea list-group w-full" :list="plugins">
+    <draggable class="dragArea list-group plugins" :list="plugins">
       <div class="list-group-item" v-for="item in plugins" :key="item.name">
         <Plugin
           :name="item.name"
@@ -119,10 +119,10 @@ export default defineComponent({
 @import "@/styles/_variables.scss";
 .plugins-manager {
   background-color: $body_background;
+}
+.plugins {
   display: flex;
   justify-content: space-between;
-}
-.list-group-item {
-  float: left;
+  flex-wrap: wrap;
 }
 </style>
