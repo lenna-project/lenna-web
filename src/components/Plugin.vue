@@ -1,17 +1,22 @@
 <template>
   <div class="plugin" v-if="plugin">
-    <img id="icon" v-if="icon" :src="icon" />
-
-    <h2 for="checkbox">{{ plugin.name() }}</h2>
-    <label class="checkbox">
-      <input
-        type="checkbox"
-        id="checkbox"
-        v-model="enabled"
-        v-on:change="updateEnabled(enabled)"
-      />
-      <span>Check Me</span>
-    </label>
+    <div>
+      <img id="icon" v-if="icon && !enabled" :src="icon" />
+    </div>
+    <div>
+      <h2 for="checkbox">{{ plugin.name() }}</h2>
+      <div class="checkbox-container">
+        <label class="checkbox">
+          <input
+            type="checkbox"
+            id="checkbox"
+            v-model="enabled"
+            v-on:change="updateEnabled(enabled)"
+          />
+          <span></span>
+        </label>
+      </div>
+    </div>
     <div v-if="enabled">
       <span>{{ plugin.description() }}</span>
       <div v-if="ui && config">
@@ -143,23 +148,29 @@ export default {
   border-radius: 5px;
   box-shadow: 5px 5px 5px $shadow;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .plugin h2 {
   font-size: 1.4em;
+  text-transform: uppercase;
 }
+.checkbox-container {
+  height: 50px;
+}
+
 .checkbox {
   cursor: pointer;
   position: relative;
 }
 
-.checkbox > span {
-  color: white;
-  padding: 0.5rem 0.25rem;
-}
-
 .checkbox > input {
-  height: 35px;
-  width: 40px;
+  height: 40px;
+  width: 50px;
+  position: absolute;
+  left: -25px;
+  top: 0rem;
   -webkit-appearance: none;
   -moz-appearance: none;
   -o-appearance: none;
@@ -176,13 +187,13 @@ export default {
 }
 
 .checkbox > input:checked + span::before {
+  font-size: 2.4em;
   content: "\2713";
-  display: block;
   text-align: center;
   color: white;
   position: absolute;
-  left: 0.8rem;
-  top: -0.7rem;
+  left: -0.5rem;
+  top: 0rem;
 }
 
 .checkbox > input:active {
@@ -191,7 +202,8 @@ export default {
 
 #icon {
   margin: 10px;
-  width: 48px;
-  height: 48px;
+  width: 96px;
+  height: 96px;
+  left: 50%;
 }
 </style>

@@ -10,7 +10,7 @@
           {{ option.text }}
         </option>
       </select>
-      <p>SAVE FILE</p>
+      <p>SAVE FILES</p>
     </div>
     <br />
     <div class="image-container">
