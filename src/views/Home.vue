@@ -14,20 +14,18 @@
     <div class="top_main">
       <ImageUpload ref="imageUpload" @changeImage="changeImages($event)" />
       <div id="process">
-        <button v-on:click="processImages">
-          PROCESS IMAGE
-        </button>
+        <button v-on:click="processImages">PROCESS IMAGE</button>
       </div>
       <ImagePreview :images="resultImages" />
     </div>
     <div class="bottom_main">
-    <PluginsManager
-      ref="pluginsManager"
-      :defaultConfig="defaultConfig"
-      :defaultPlugins="defaultPlugins"
-      pluginsmap="https://lenna.app/lenna-plugins/importmap.json"
-      pluginsjson="https://lenna.app/lenna-plugins/plugins.json"
-    />
+      <PluginsManager
+        ref="pluginsManager"
+        :defaultConfig="defaultConfig"
+        :defaultPlugins="defaultPlugins"
+        pluginsmap="https://lenna.app/lenna-plugins/importmap.json"
+        pluginsjson="https://lenna.app/lenna-plugins/plugins.json"
+      />
     </div>
   </div>
 </template>
@@ -36,6 +34,7 @@
 import { defineComponent, ref } from "vue";
 import * as NProgress from "nprogress";
 import { Slide } from "vue3-burger-menu";
+import { useToast } from "vue-toastification";
 import PluginsManager from "@/components/PluginsManager.vue";
 import ImageUpload from "@/components/ImageUpload.vue";
 import ImagePreview from "@/components/ImagePreview.vue";
@@ -84,15 +83,24 @@ export default defineComponent({
       this.sourceImages.push(files.file);
     },
     async processImages() {
+      const toast = useToast();
+      const imageCount = this.sourceImages.length;
+      let convertedCount = 0;
+      toast.info(`converting ${imageCount} images started`);
       this.resultImages = [];
       for (let sourceImage of this.sourceImages) {
         this.process(sourceImage).then((image) => {
           let file = new File([image], sourceImage.name, { type: "image/png" });
           this.resultImages.push(file);
+          toast.success(
+            `converted ${this.resultImages.length} of ${imageCount} images`
+          );
+          convertedCount++;
         });
       }
       this.imageUpload.images = [];
       this.sourceImages = [];
+      toast.success(`converted ${convertedCount}} images`);
     },
     async process(imageFile) {
       NProgress.configure({ parent: "#process" });
