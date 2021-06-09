@@ -92,10 +92,10 @@ export default defineComponent({
         this.process(sourceImage).then((image) => {
           let file = new File([image], sourceImage.name, { type: "image/png" });
           this.resultImages.push(file);
-          toast.success(
-            `converted ${this.resultImages.length} of ${imageCount} images`
-          );
           convertedCount++;
+          toast.success(
+            `converted ${convertedCount} of ${imageCount} images`
+          );
         });
       }
       this.imageUpload.images = [];

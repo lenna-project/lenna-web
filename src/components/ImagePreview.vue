@@ -37,6 +37,7 @@
 import VueEasyLightbox from "vue-easy-lightbox";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
+import { useToast } from "vue-toastification";
 export default {
   components: {
     VueEasyLightbox,
@@ -77,12 +78,20 @@ export default {
       });
 
       let zip = new JSZip();
+      const toast = useToast();
+      const imageCount = this.images.length;
+      let compressedCount = 0;
+      toast.info(`compressing of ${this.images.length} images started`);
       let promises = this.images.map((image) => {
         let type = `image/${this.filetype}`;
 
         return this.safeImage(cli, image, this.filetype).then(
           (compressed_image) => {
             let file = new File([compressed_image], image.name, { type });
+            compressedCount++;
+            toast.success(
+              `compressed ${image.name} ${compressedCount} / ${imageCount} images`
+            );
             return zip.file(
               `${image.name.replace(/(\.[^/.]+)+$/, "")}.${this.filetype}`,
               file
