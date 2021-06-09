@@ -1,5 +1,6 @@
 <template>
   <div class="navbar">
+    <img id="banner" src="@/assets/banner.png" />
     <router-link to="/">Home</router-link>
     <a href="marketplace">Marketplace</a>
     <router-link to="/about">About</router-link>
@@ -14,14 +15,14 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/_variables.scss";
 
-$navbar_padding: 40px;
+$navbar_padding: 20px;
 
 .navbar {
-  padding: $navbar_padding;
+  padding: 0px $navbar_padding;
   position: fixed;
   top: 0;
   width: calc(100% - 2* #{$navbar_padding});
-  height: 40px;
+  height: 120px;
   margin: 0;
   overflow: hidden;
   background-color: $nav_background;
@@ -35,6 +36,7 @@ $navbar_padding: 40px;
   display: block;
   color: $text_color;
   text-align: center;
+  margin: 40px 0px;
   padding: 14px 16px;
   text-decoration: none;
 }
@@ -45,5 +47,11 @@ $navbar_padding: 40px;
 .navbar .router-link-active {
   color: white;
   background-color: $primary_color;
+}
+#banner {
+  position: absolute;
+  top: 10px;
+  left: 40%;
+  max-height: 100px;
 }
 </style>
