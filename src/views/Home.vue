@@ -124,6 +124,7 @@ export default defineComponent({
 <style scoped lang="scss">
 @import "@/styles/_variables.scss";
 @import "//unpkg.com/nprogress@0.2.0/nprogress.css";
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap');
 #circle {
   width: 120px;
   height: 120px;
@@ -145,6 +146,8 @@ export default defineComponent({
 }
 .main h1 {
   text-transform: uppercase;
+  font-family: 'Amatic SC', cursive;
+  font-size: 32pt;
 }
 .top_main {
   display: flex;
@@ -158,7 +161,7 @@ export default defineComponent({
   margin-top: 50%;
   width: 350px;
   align-self: center;
-  font-size: 24pt;
+  font-size: 20pt;
   padding: 12px;
   border-radius: 30px;
   border: none;
