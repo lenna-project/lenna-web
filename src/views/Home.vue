@@ -132,7 +132,7 @@ export default defineComponent({
 .main {
   background-color: $body_background;
   padding: 150px;
-  padding-top: 100px;
+  padding-top: 120px;
   text-align: center;
 }
 .main h1 {
@@ -151,8 +151,9 @@ export default defineComponent({
   width: 350px;
   align-self: center;
   font-size: 24pt;
-  padding: 10px;
+  padding: 12px;
   border-radius: 30px;
+  border: none;
   box-shadow: 5px 5px 5px $shadow;
 }
 </style>

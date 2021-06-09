@@ -1,17 +1,19 @@
 <template>
   <div class="plugin" v-if="plugin">
     <img id="icon" v-if="icon" :src="icon" />
-    <h1>
+
+    <h2 for="checkbox">{{ plugin.name() }}</h2>
+    <label class="checkbox">
       <input
         type="checkbox"
         id="checkbox"
         v-model="enabled"
         v-on:change="updateEnabled(enabled)"
       />
-      <label for="checkbox">{{ plugin.name() }}</label>
-    </h1>
-    {{ plugin.description() }}
+      <span>Check Me</span>
+    </label>
     <div v-if="enabled">
+      <span>{{ plugin.description() }}</span>
       <div v-if="ui && config">
         <component
           :key="pluginKey"
@@ -142,6 +144,51 @@ export default {
   box-shadow: 5px 5px 5px $shadow;
   text-align: center;
 }
+.plugin h2 {
+  font-size: 1.4em;
+}
+.checkbox {
+  cursor: pointer;
+  position: relative;
+}
+
+.checkbox > span {
+  color: white;
+  padding: 0.5rem 0.25rem;
+}
+
+.checkbox > input {
+  height: 35px;
+  width: 40px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  border-radius: 25px;
+  outline: none;
+  transition-duration: 0.3s;
+  background-color: #a2f6f2;
+  cursor: pointer;
+}
+
+.checkbox > input:checked {
+  background-color: #a2f6f2;
+}
+
+.checkbox > input:checked + span::before {
+  content: "\2713";
+  display: block;
+  text-align: center;
+  color: white;
+  position: absolute;
+  left: 0.8rem;
+  top: -0.7rem;
+}
+
+.checkbox > input:active {
+  border: 2px solid #34495e;
+}
+
 #icon {
   margin: 10px;
   width: 48px;
