@@ -1,31 +1,37 @@
 <template>
-  <div id="circle"></div>
-  <Slide>
-    <button v-on:click="loadPlugin(pluginUrl)">add plugin</button>
-    <input
-      v-model="pluginUrl"
-      placeholder="https://lenna.app/lenna-plugins/desaturate/remoteEntry.js"
-    />
-    <br />
-    <Config v-if="pluginsManager" :plugins="pluginsManager.plugins" />
-  </Slide>
-  <div class="main">
-    <h1>Convert images online without upload of your data</h1>
-    <div class="top_main">
-      <ImageUpload ref="imageUpload" @changeImage="changeImages($event)" />
-      <div id="process">
-        <button v-on:click="processImages">PROCESS IMAGE</button>
-      </div>
-      <ImagePreview :images="resultImages" />
-    </div>
-    <div class="bottom_main">
-      <PluginsManager
-        ref="pluginsManager"
-        :defaultConfig="defaultConfig"
-        :defaultPlugins="defaultPlugins"
-        pluginsmap="https://lenna.app/lenna-plugins/importmap.json"
-        pluginsjson="https://lenna.app/lenna-plugins/plugins.json"
+  <div>
+    <div id="circle"></div>
+    <Slide>
+      <button v-on:click="loadPlugin(pluginUrl)">add plugin</button>
+      <input
+        v-model="pluginUrl"
+        placeholder="https://lenna.app/lenna-plugins/desaturate/remoteEntry.js"
       />
+      <br />
+      <Config v-if="pluginsManager" :plugins="pluginsManager.plugins" />
+    </Slide>
+    <div class="main">
+      <h1>Convert images online without upload of your data</h1>
+      <div class="top_main">
+        <ImageUpload ref="imageUpload" @changeImage="changeImages($event)" />
+        <div id="process">
+          <button v-on:click="processImages">PROCESS IMAGE</button>
+        </div>
+        <ImagePreview :images="resultImages" />
+      </div>
+      <div class="bottom_main">
+        <PluginsManager
+          ref="pluginsManager"
+          :defaultConfig="defaultConfig"
+          :defaultPlugins="defaultPlugins"
+          pluginsmap="https://lenna.app/lenna-plugins/importmap.json"
+          pluginsjson="https://lenna.app/lenna-plugins/plugins.json"
+        />
+      </div>
+      <div id="line">
+        <hr />
+        <div class="plus radius" v-on:click="onMorePlugins()"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -79,6 +85,9 @@ export default defineComponent({
       console.log("loaded plugin: ", pluginUrl);
       this.pluginsManager.importPlugin(pluginUrl, pluginUrl);
     },
+    onMorePlugins() {
+      window.location.replace("/marketplace");
+    },
     changeImages(files) {
       this.sourceImages.push(files.file);
     },
@@ -93,9 +102,7 @@ export default defineComponent({
           let file = new File([image], sourceImage.name, { type: "image/png" });
           this.resultImages.push(file);
           convertedCount++;
-          toast.success(
-            `converted ${convertedCount} of ${imageCount} images`
-          );
+          toast.success(`converted ${convertedCount} of ${imageCount} images`);
         });
       }
       this.imageUpload.images = [];
@@ -124,7 +131,7 @@ export default defineComponent({
 <style scoped lang="scss">
 @import "@/styles/_variables.scss";
 @import "//unpkg.com/nprogress@0.2.0/nprogress.css";
-@import url('https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap");
 #circle {
   width: 120px;
   height: 120px;
@@ -146,8 +153,17 @@ export default defineComponent({
 }
 .main h1 {
   text-transform: uppercase;
-  font-family: 'Amatic SC', cursive;
+  font-family: "Amatic SC", cursive;
   font-size: 32pt;
+}
+.main hr {
+  margin-top: 10px;
+  border: none;
+  border-top: 2px dotted blue;
+  color: #fff;
+  background-color: #fff;
+  height: 2px;
+  width: 100%;
 }
 .top_main {
   display: flex;
@@ -166,5 +182,30 @@ export default defineComponent({
   border-radius: 30px;
   border: none;
   box-shadow: 5px 5px 5px $shadow;
+}
+#line {
+  margin-top: 50px;
+  position: relative;
+}
+
+.plus {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+
+  background: linear-gradient(#fff, #fff), linear-gradient(#fff, #fff), blue;
+  background-position: center;
+  background-size: 50% 2px, 2px 50%; /*thickness = 2px, length = 50% (25px)*/
+  background-repeat: no-repeat;
+}
+.radius {
+  border-radius: 50%;
+}
+.plus:hover {
+  transform: scale(1.1);
 }
 </style>
