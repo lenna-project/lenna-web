@@ -152,6 +152,10 @@ export default {
   flex-direction: column;
   justify-content: space-between;
 }
+.plugin:hover {
+    box-shadow: 10px 10px 5px $shadow;
+    transform: scale(1.1); 
+}
 .plugin h2 {
   font-size: 1.4em;
   text-transform: uppercase;
@@ -202,7 +206,7 @@ export default {
 
 #icon {
   margin: 10px;
-  width: 96px;
+  margin-top: 20px;
   height: 96px;
   left: 50%;
 }
