@@ -12,9 +12,9 @@
       ref="upload"
       class="file-upload"
     >
-      <h3>DROP<br/>OR<br/>SELECT FILES</h3></FileUpload
+      drop<br />or<br />select files</FileUpload
     >
-    <div class="image-container">
+    <div v-if="images.length > 0" class="image-container">
       <div
         v-for="(src, index) in images"
         :key="index"
@@ -92,12 +92,15 @@ export default defineComponent({
   border: 2px solid black;
   border-radius: 10px;
   box-shadow: 10px 5px 5px $shadow;
-  align-items: center;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .file-upload {
+  text-transform: uppercase;
+  font-size: 14pt;
   margin: 10px;
-  height: 25%;
   display: flex;
   justify-content: center;
   align-items: center;

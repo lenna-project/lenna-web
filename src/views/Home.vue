@@ -15,7 +15,7 @@
       <div class="top_main">
         <ImageUpload ref="imageUpload" @changeImage="changeImages($event)" />
         <div id="process">
-          <button v-on:click="processImages">PROCESS IMAGE</button>
+          <button v-on:click="processImages">process images</button>
         </div>
         <ImagePreview :images="resultImages" />
       </div>
@@ -174,10 +174,11 @@ export default defineComponent({
   padding-bottom: 0;
 }
 #process button {
-  margin-top: 50%;
+  margin-top: 40%;
   width: 350px;
   align-self: center;
   font-size: 20pt;
+  text-transform: uppercase;
   padding: 12px;
   border-radius: 30px;
   border: none;

@@ -157,7 +157,9 @@ export default {
     transform: scale(1.1); 
 }
 .plugin h2 {
-  font-size: 1.4em;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 14pt;
   text-transform: uppercase;
 }
 .checkbox-container {

@@ -10,10 +10,10 @@
           {{ option.text }}
         </option>
       </select>
-      <p>SAVE FILES</p>
+      <p>save files</p>
     </div>
     <br />
-    <div class="image-container">
+    <div  v-if="imgs.length > 0"  class="image-container">
       <div
         v-for="(src, index) in imgs"
         :key="index"
@@ -80,6 +80,9 @@ export default {
       let zip = new JSZip();
       const toast = useToast();
       const imageCount = this.images.length;
+      if(imageCount < 1) {
+        return;
+      }
       let compressedCount = 0;
       toast.info(`compressing of ${this.images.length} images started`);
       let promises = this.images.map((image) => {
@@ -142,6 +145,9 @@ export default {
   box-shadow: 10px 5px 5px $shadow;
   align-items: center;
   text-align: center;
+    display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .image-container {
   height: 200px;
@@ -150,8 +156,9 @@ export default {
   overflow-y: auto;
 }
 #save {
+  text-transform: uppercase;
+  font-size: 14pt;
   cursor: pointer;
-  height: 100px;
-  padding: 10px;
+  margin: 10px;
 }
 </style>
