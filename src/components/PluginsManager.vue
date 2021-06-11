@@ -24,6 +24,7 @@ import { loadConfig, listPlugins } from "../config";
 export default defineComponent({
   name: "PluginsManager",
   props: {
+    filter: String,
     pluginsmap: String,
     pluginsjson: String,
     defaultConfig: Object,
@@ -52,7 +53,7 @@ export default defineComponent({
     }
     listPlugins().forEach((plugin) => {
       this.importPlugin(plugin, plugin);
-    })
+    });
     //this.importPlugin("local", "http://localhost:3002/remoteEntry.js");
   },
   methods: {
@@ -79,7 +80,19 @@ export default defineComponent({
             config: {},
           };
           pluginConfig = loadConfig(pluginConfig);
-          this.plugins.push(pluginConfig);
+          if (this.filter) {
+            if (pluginConfig.name.includes(this.filter)) {
+              pluginConfig.enabled = true;
+              this.defaultConfig.push({
+                name: pluginConfig.name,
+                enabled: true,
+                config: pluginConfig.config,
+              });
+              this.plugins.push(pluginConfig);
+            }
+          } else {
+            this.plugins.push(pluginConfig);
+          }
         });
       });
     },
@@ -97,7 +110,19 @@ export default defineComponent({
               config: {},
             };
             pluginConfig = loadConfig(pluginConfig);
-            this.plugins.push(pluginConfig);
+            if (this.filter) {
+              if (pluginConfig.name.includes(this.filter)) {
+                pluginConfig.enabled = true;
+                this.defaultConfig.push({
+                  name: pluginConfig.name,
+                  enabled: true,
+                  config: pluginConfig.config,
+                });
+                this.plugins.push(pluginConfig);
+              }
+            } else {
+              this.plugins.push(pluginConfig);
+            }
           });
         }
       }
