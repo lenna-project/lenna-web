@@ -12,6 +12,7 @@
     </Slide>
     <div class="main">
       <h1>Convert images online without upload of your data</h1>
+      <h2 v-if="just">{{just}}</h2>
       <div class="top_main">
         <ImageUpload ref="imageUpload" @changeImage="changeImages($event)" />
         <div id="process">
