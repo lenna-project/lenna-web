@@ -9,15 +9,15 @@ const routes = [
     component: Home,
   },
   {
-    path: "/just/${just}",
-    name: "Home",
-    component: Home,
-  },
-  {
     path: "/about",
     name: "About",
     component: About,
   },
+  {
+    path: "/just/${just}",
+    name: "Just",
+    component: Home,
+  }
 ];
 
 const router = createRouter({
