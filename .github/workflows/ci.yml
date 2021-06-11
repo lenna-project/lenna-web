@@ -18,6 +18,8 @@ jobs:
         run: NODE_ENV=production npm run build --if-present
       - name: Custom 404 for route redirect
         run: cp dist/index.html dist/404.html
+      - name: Custom 404 for route redirect
+        run: cp dist/just/index.html dist/just/404.html
 
       - name: Deploy App
         uses: peaceiris/actions-gh-pages@v3

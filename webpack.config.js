@@ -102,6 +102,11 @@ module.exports = (env = {}) => ({
       template: path.resolve(__dirname, "./index.html"),
       filename: "./about/index.html",
     }),
+    new HtmlWebpackPlugin({
+      title: "lenna-web-just",
+      template: path.resolve(__dirname, "./index.html"),
+      filename: "./just/index.html",
+    }),
     new VueLoaderPlugin(),
     new CopyPlugin({
       patterns: ["public"],
