@@ -9,6 +9,11 @@ const routes = [
     component: Home,
   },
   {
+    path: "/just/${just}",
+    name: "Home",
+    component: Home,
+  },
+  {
     path: "/about",
     name: "About",
     component: About,

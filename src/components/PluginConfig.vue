@@ -1,6 +1,7 @@
 <template>
   <div class="plugin-config" v-if="config">
     <div v-for="c in config" :key="c.key">
+      <div class="parameter">
       <label>{{ c.key }}: </label>
       <input
         type="number"
@@ -8,6 +9,7 @@
         v-model.number="c.value"
         @change="updateConfig()"
       />
+      </div>
     </div>
   </div>
 </template>
@@ -45,5 +47,12 @@ export default {
 <style scoped>
 .plugin-config {
   margin: 5px;
+}
+.parameter {
+  display: flex;
+  justify-content: space-between;
+}
+.parameter input {
+  max-width: 100px;
 }
 </style>

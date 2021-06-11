@@ -141,7 +141,7 @@ export default {
 @import "@/styles/_variables.scss";
 .plugin {
   margin: 10px;
-  padding: 5px;
+  padding: 10px;
   min-width: 250px;
   min-height: 250px;
   background-color: white;
