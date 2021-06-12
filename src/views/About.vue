@@ -32,6 +32,7 @@
       <a href="https://github.com/lenna-project/lenna-cli">lenna-cli</a>
       can be found on github.
     </p>
+    <img src="https://raw.githubusercontent.com/lenna-project/lenna-cli/main/docs/images/run.gif" />
   </div>
 </template>
 <style scoped lang="scss">
