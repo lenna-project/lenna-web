@@ -5,6 +5,7 @@
       Lenna is a library for image processing algorithms. The web page allows to
       test and use them.
     </p>
+          <Help />
     <h2>Plugins</h2>
     <p>
       Lenna allows to plug in more algorithms. 
@@ -35,6 +36,18 @@
     <img src="https://raw.githubusercontent.com/lenna-project/lenna-cli/main/docs/images/run.gif" />
   </div>
 </template>
+
+<script>
+import { defineComponent } from "vue";
+import Help from "@/components/Help.vue";
+
+export default defineComponent({
+  name: "About",
+  components: {
+    Help,
+  },
+});
+</script>
 <style scoped lang="scss">
 @import "@/styles/_variables.scss";
 .about {

@@ -8,6 +8,7 @@
       />
       <br />
       <Config v-if="pluginsManager" :plugins="pluginsManager.plugins" />
+      <Help />
     </Slide>
     <div class="main">
       <h1>Convert images online without upload of your data</h1>
@@ -46,6 +47,7 @@ import PluginsManager from "@/components/PluginsManager.vue";
 import ImageUpload from "@/components/ImageUpload.vue";
 import ImagePreview from "@/components/ImagePreview.vue";
 import Config from "@/components/Config.vue";
+import Help from "@/components/Help.vue";
 
 export default defineComponent({
   name: "Home",
@@ -55,6 +57,7 @@ export default defineComponent({
     ImageUpload,
     ImagePreview,
     Config,
+    Help,
   },
   data() {
     return {
