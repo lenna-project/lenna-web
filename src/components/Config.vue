@@ -1,6 +1,6 @@
 <template>
   <button v-on:click="generateConfigUrlBase64" v-if="plugins">
-    generate config url
+    generate actual config url
   </button>
   <div class="config" v-if="base64config">
     <textarea v-model="base64config" :readonly="true"></textarea>

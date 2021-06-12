@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div id="circle"></div>
     <Slide>
       <button v-on:click="loadPlugin(pluginUrl)">add plugin</button>
       <input
@@ -12,7 +11,7 @@
     </Slide>
     <div class="main">
       <h1>Convert images online without upload of your data</h1>
-      <h2 v-if="just">{{just}}</h2>
+      <h2 v-if="just">{{ just }}</h2>
       <div class="top_main">
         <ImageUpload ref="imageUpload" @changeImage="changeImages($event)" />
         <div id="process">
@@ -104,17 +103,26 @@ export default defineComponent({
       let convertedCount = 0;
       toast.info(`converting ${imageCount} images started`);
       this.resultImages = [];
+      let tasks = [];
       for (let sourceImage of this.sourceImages) {
-        this.process(sourceImage).then((image) => {
-          let file = new File([image], sourceImage.name, { type: "image/png" });
-          this.resultImages.push(file);
-          convertedCount++;
-          toast.success(`converted ${convertedCount} of ${imageCount} images`);
-        });
+        tasks.push(
+          this.process(sourceImage).then((image) => {
+            let file = new File([image], sourceImage.name, {
+              type: "image/png",
+            });
+            this.resultImages.push(file);
+            convertedCount++;
+            toast.success(
+              `converted ${convertedCount} of ${imageCount} images`
+            );
+          })
+        );
       }
       this.imageUpload.images = [];
       this.sourceImages = [];
-      toast.success(`converted ${convertedCount}} images`);
+      return Promise.all(tasks).then(() => {
+        toast.info(`converted ${convertedCount} images`);
+      });
     },
     async process(imageFile) {
       NProgress.configure({ parent: "#process" });
@@ -139,19 +147,7 @@ export default defineComponent({
 @import "@/styles/_variables.scss";
 @import "//unpkg.com/nprogress@0.2.0/nprogress.css";
 @import url("https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap");
-#circle {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 2px solid $shadow;
-  background-color: $body_background;
-  position: absolute;
-  top: -25px;
-  left: -25px;
-}
-#circle:hover {
-  transform: scale(1.1);
-}
+
 .main {
   background-color: $body_background;
   padding: 150px;
@@ -199,7 +195,7 @@ export default defineComponent({
 .plus {
   position: absolute;
   top: -25px;
-  left: 50%;
+  left: calc(50% - 20px);
 
   display: inline-block;
   width: 50px;

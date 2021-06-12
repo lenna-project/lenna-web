@@ -13,7 +13,7 @@
       <p>save files</p>
     </div>
     <br />
-    <div  v-if="imgs.length > 0"  class="image-container">
+    <div v-if="imgs.length > 0" class="image-container">
       <div
         v-for="(src, index) in imgs"
         :key="index"
@@ -80,7 +80,7 @@ export default {
       let zip = new JSZip();
       const toast = useToast();
       const imageCount = this.images.length;
-      if(imageCount < 1) {
+      if (imageCount < 1) {
         return;
       }
       let compressedCount = 0;
@@ -145,7 +145,7 @@ export default {
   box-shadow: 10px 5px 5px $shadow;
   align-items: center;
   text-align: center;
-    display: flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
 }
@@ -160,5 +160,21 @@ export default {
   font-size: 14pt;
   cursor: pointer;
   margin: 10px;
+}
+
+#save select {
+  height: 40px;
+  min-width: 60px;
+  color: $text_color;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  outline: none;
+  background-color: white;
+}
+
+#save select option {
 }
 </style>
