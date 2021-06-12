@@ -20,6 +20,7 @@ import { defineComponent } from "vue";
 import { VueDraggableNext } from "vue-draggable-next";
 import Plugin from "@/components/Plugin.vue";
 import { loadConfig, listPlugins } from "../config";
+import { useToast } from "vue-toastification";
 
 export default defineComponent({
   name: "PluginsManager",
@@ -40,20 +41,26 @@ export default defineComponent({
     };
   },
   beforeMount() {
-    try {
-      this.getPluginsmap();
-      this.getPluginsjson();
-    } catch (error) {
-      console.log(error);
-    }
+    let tasks = [this.getPluginsmap(), this.getPluginsjson()];
     if (this.defaultPlugins) {
       this.defaultPlugins.forEach((plugin) => {
-        this.importPlugin(plugin, plugin);
+        tasks.push(this.importPlugin(plugin, plugin));
       });
     }
     listPlugins().forEach((plugin) => {
-      this.importPlugin(plugin, plugin);
+      tasks.push(this.importPlugin(plugin, plugin));
     });
+    Promise.all(tasks)
+      .then(() => {
+        if (this.plugins.length < 1) {
+          const toast = useToast();
+          toast.warning(
+            `No plugin enabled. Find more plugins in the marketplace.`
+          );
+        }
+      })
+      .catch(console.log);
+
     //this.importPlugin("local", "http://localhost:3002/remoteEntry.js");
   },
   methods: {
@@ -68,10 +75,10 @@ export default defineComponent({
     raw(comp) {
       return comp;
     },
-    importPlugin(key, url) {
-      System.import(url).then((module) => {
-        module.init(__webpack_require__.S["default"]);
-        module.get("default").then((plugin) => {
+    async importPlugin(key, url) {
+      return System.import(url).then(async (module) => {
+        await module.init(__webpack_require__.S["default"]);
+        return module.get("default").then((plugin) => {
           let pluginConfig = {
             name: key,
             url: url,
@@ -97,45 +104,51 @@ export default defineComponent({
       });
     },
     async getPluginsmap() {
+      let tasks = [];
       if (this.pluginsmap) {
         const res = await fetch(this.pluginsmap);
         const data = await res.json();
         for (const key in data.imports) {
-          System.import(key).then((plugin) => {
-            let pluginConfig = {
-              name: key,
-              url: data.imports[key],
-              plugin: plugin,
-              enabled: false,
-              config: {},
-            };
-            pluginConfig = loadConfig(pluginConfig);
-            if (this.filter) {
-              if (pluginConfig.name.includes(this.filter)) {
-                pluginConfig.enabled = true;
-                this.defaultConfig.push({
-                  name: pluginConfig.name,
-                  enabled: true,
-                  config: pluginConfig.config,
-                });
+          tasks.push(
+            System.import(key).then((plugin) => {
+              let pluginConfig = {
+                name: key,
+                url: data.imports[key],
+                plugin: plugin,
+                enabled: false,
+                config: {},
+              };
+              pluginConfig = loadConfig(pluginConfig);
+              if (this.filter) {
+                if (pluginConfig.name.includes(this.filter)) {
+                  pluginConfig.enabled = true;
+                  this.defaultConfig.push({
+                    name: pluginConfig.name,
+                    enabled: true,
+                    config: pluginConfig.config,
+                  });
+                  this.plugins.push(pluginConfig);
+                }
+              } else {
                 this.plugins.push(pluginConfig);
               }
-            } else {
-              this.plugins.push(pluginConfig);
-            }
-          });
+            })
+          );
         }
       }
+      return Promise.all(tasks);
     },
     async getPluginsjson() {
+      let tasks = []
       if (this.pluginsjson) {
         const res = await fetch(this.pluginsjson);
         const data = await res.json();
         for (const key in data.plugins) {
           let url = data.plugins[key];
-          this.importPlugin(key, url);
+          tasks.push(this.importPlugin(key, url));
         }
       }
+      return Promise.all(tasks);
     },
   },
 });
