@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-    <img id="banner" src="@/assets/banner.png" />
+    <div id="banner"><img src="@/assets/banner.png" /></div>
     <router-link to="/">Home</router-link>
     <a href="marketplace">Marketplace</a>
     <router-link to="/about">About</router-link>
@@ -21,7 +21,7 @@ $navbar_padding: 20px;
   padding: 0px $navbar_padding;
   position: fixed;
   top: 0;
-  width: calc(100% - 2* #{$navbar_padding});
+  width: calc(100% - 2 * #{$navbar_padding});
   height: 120px;
   margin: 0;
   overflow: hidden;
@@ -53,5 +53,27 @@ $navbar_padding: 20px;
   top: 10px;
   left: 40%;
   max-height: 100px;
+}
+
+#banner img {
+  max-height: 100px;
+}
+
+@media screen and (max-width: 800px) {
+  #banner {
+    left: 10px;
+    top: 40px;
+  }
+  #banner img {
+    display: none;
+  }
+  #banner::before {
+    background-image: url("https://lenna.app/logo.png");
+    background-size: 30px 30px;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    content: "";
+  }
 }
 </style>

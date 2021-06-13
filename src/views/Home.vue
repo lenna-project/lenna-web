@@ -215,4 +215,14 @@ export default defineComponent({
 .plus:hover {
   transform: scale(1.1);
 }
+
+@media screen and (max-width: 800px) {
+  .main {
+    margin-top: 120px;
+    padding: 0;
+  }
+  #process button {
+    width: 150px;
+  }
+}
 </style>
