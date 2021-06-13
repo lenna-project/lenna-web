@@ -5,7 +5,11 @@
       Lenna is a library for image processing algorithms. The web page allows to
       test and use them.
     </p>
-          <Help />
+    <Help />
+    <h2>Thanks</h2>
+      <ol>
+        <li>Silvia (<a href="https://github.com/silvia-odwyer/photon">photon</a>)</li>
+      </ol>
     <h2>Plugins</h2>
     <p>
       Lenna allows to plug in more algorithms. 
