@@ -7,9 +7,9 @@
     </p>
     <Help />
     <h2>Thanks</h2>
-      <ol>
+      <ul>
         <li>Silvia (<a href="https://github.com/silvia-odwyer/photon">photon</a>)</li>
-      </ol>
+      </ul>
     <h2>Plugins</h2>
     <p>
       Lenna allows to plug in more algorithms. 

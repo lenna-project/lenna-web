@@ -1,6 +1,6 @@
 <template>
   <div class="image-preview">
-    <div id="save" v-on:click="downloadZip">
+    <div id="save">
       <select v-model="filetype">
         <option
           v-for="option in options"
@@ -10,7 +10,7 @@
           {{ option.text }}
         </option>
       </select>
-      <p>save files</p>
+      <p v-on:click="downloadZip">save files</p>
     </div>
     <br />
     <div v-if="imgs.length > 0" class="image-container">
@@ -54,6 +54,9 @@ export default {
       options: [
         { text: "png", value: "png" },
         { text: "jpg", value: "jpg" },
+        { text: "bmp", value: "bmp" },
+        { text: "ico", value: "ico" },
+        { text: "gif", value: "gif" },
       ],
     };
   },
