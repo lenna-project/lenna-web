@@ -72,7 +72,7 @@ export default {
   methods: {
     async loadDefaultConfig() {
       this.plugin.defaultConfig().then((defaultConfig) => {
-        if (this.defaultConfig) {
+        if (this.defaultConfig && this.defaultConfig.length > 0) {
           const { enabled, config } = loadConfigFromParams(
             {
               name: this.name,
