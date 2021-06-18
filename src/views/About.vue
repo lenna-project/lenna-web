@@ -31,6 +31,7 @@
       </ul>
     </p>
     <h2>Command Line Interface</h2>
+    <iframe src="https://snapcraft.io/lenna-cli/embedded?button=black&summary=true" frameborder="0" width="100%" height="380px" style="border: 1px solid #CCC; border-radius: 2px;"></iframe>
     <p>
       A command line interface allows to use the algorithms and run them on
       multiple images at once. The source for
