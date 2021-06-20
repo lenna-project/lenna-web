@@ -39,6 +39,10 @@
       can be found on github.
     </p>
     <img src="https://raw.githubusercontent.com/lenna-project/lenna-cli/main/docs/images/run.gif" />
+
+    <h2>Desktop App</h2>
+    <iframe src="https://snapcraft.io/lenna/embedded?button=black&summary=true&screenshot=true" frameborder="0" width="100%" height="620px" style="border: 1px solid #CCC; border-radius: 2px;"></iframe>
+    
   </div>
 </template>
 
