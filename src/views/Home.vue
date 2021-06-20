@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="v-step-0 v-step-1 v-step-2">
     <Slide>
       <button v-on:click="loadPlugin(pluginUrl)">add plugin</button>
       <input
@@ -14,14 +14,21 @@
       <h1>Convert images online without upload of your data</h1>
       <h2 v-if="just">{{ just }}</h2>
       <div class="top_main">
-        <ImageUpload ref="imageUpload" @changeImage="changeImages($event)" />
+        <ImageUpload
+          class="v-step-3"
+          ref="imageUpload"
+          @changeImage="changeImages($event)"
+        />
         <div id="process">
-          <button v-on:click="processImages">process images</button>
+          <button class="v-step-5" v-on:click="processImages">
+            process images
+          </button>
         </div>
-        <ImagePreview :images="resultImages" />
+        <ImagePreview class="v-step-6" :images="resultImages" />
       </div>
       <div class="bottom_main">
         <PluginsManager
+          class="v-step-4"
           ref="pluginsManager"
           :filter="just"
           :defaultConfig="defaultConfig"
@@ -35,6 +42,7 @@
         <div class="plus radius" v-on:click="onMorePlugins()"></div>
       </div>
     </div>
+    <v-tour name="Home" :steps="steps"></v-tour>
   </div>
 </template>
 
@@ -67,7 +75,46 @@ export default defineComponent({
       defaultPlugins: null,
       sourceImages: [],
       resultImages: [],
+      steps: [
+        {
+          target: ".v-step-0",
+          header: {
+            title: "Get Started",
+          },
+          content: `Discover <strong>Lenna App</strong>!`,
+        },
+        {
+          target: ".v-step-1",
+          content:
+            "Get some information about this page and links to project page and desktop app.",
+        },
+        {
+          target: ".v-step-3",
+          content: "Place images you want convert from your computer here.",
+        },
+        {
+          target: ".v-step-4",
+          content:
+            "Change the config on how you want the images to be converted.",
+        },
+        {
+          target: ".v-step-5",
+          content: "Press the button to start convertion.",
+        },
+        {
+          target: ".v-step-6",
+          content: "You can view the result here and download the images.",
+        },
+      ],
     };
+  },
+  mounted: function () {
+    let madeTour = localStorage.getItem("madeTour");
+    console.log(madeTour)
+    if (!madeTour) {
+      localStorage.setItem("madeTour", true);
+      this.$tours["Home"].start();
+    }
   },
   setup: () => {
     const imageUpload = ref(null);
