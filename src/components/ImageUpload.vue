@@ -97,6 +97,10 @@ export default defineComponent({
   flex-direction: column;
   justify-content: center;
 }
+.image-upload:hover .file-upload {
+  border: 2px solid black;
+  border-radius: 20px;
+}
 .file-upload {
   text-transform: uppercase;
   font-size: 14pt;
@@ -104,6 +108,9 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.file-upload:hover {
+  transform: scale(1.05);
 }
 .image-container {
   height: 200px;

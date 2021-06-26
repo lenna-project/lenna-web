@@ -237,6 +237,9 @@ export default defineComponent({
   border: none;
   box-shadow: 5px 5px 5px $shadow;
 }
+#process button:hover {
+  transform: scale(1.05);
+}
 #line {
   margin-top: 50px;
   position: relative;

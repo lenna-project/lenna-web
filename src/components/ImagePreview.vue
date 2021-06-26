@@ -164,7 +164,9 @@ export default {
   cursor: pointer;
   margin: 10px;
 }
-
+#save:hover {
+  transform: scale(1.05);
+}
 #save select {
   height: 40px;
   min-width: 60px;
