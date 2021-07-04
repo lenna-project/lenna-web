@@ -41,6 +41,8 @@
     <img src="https://raw.githubusercontent.com/lenna-project/lenna-cli/main/docs/images/run.gif" />
 
     <h2>Desktop App</h2>
+    <a href="https://sourceforge.net/projects/lenna/files/latest/download"><img alt="Download lenna" src="https://a.fsdn.com/con/app/sf-download-button" width=276 height=48 srcset="https://a.fsdn.com/con/app/sf-download-button?button_size=2x 2x"></a>
+    <br />
     <iframe src="https://snapcraft.io/lenna/embedded?button=black&summary=true&screenshot=true" frameborder="0" width="100%" height="620px" style="border: 1px solid #CCC; border-radius: 2px;"></iframe>
     
   </div>
