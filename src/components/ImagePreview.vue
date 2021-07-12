@@ -142,7 +142,7 @@ export default {
   margin: 10px;
   width: 300px;
   height: 350px;
-  background-color: $body_background;
+  background-color: $background_color;
   border: 2px solid black;
   border-radius: 10px;
   box-shadow: 10px 5px 5px $shadow;
@@ -178,8 +178,5 @@ export default {
   border-radius: 3px;
   outline: none;
   background-color: white;
-}
-
-#save select option {
 }
 </style>

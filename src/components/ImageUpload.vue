@@ -88,7 +88,7 @@ export default defineComponent({
   margin: 10px;
   width: 300px;
   height: 350px;
-  background-color: $body_background;
+  background-color: $background_color;
   border: 2px solid black;
   border-radius: 10px;
   box-shadow: 10px 5px 5px $shadow;
@@ -96,10 +96,6 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-.image-upload:hover .file-upload {
-  border: 2px solid black;
-  border-radius: 20px;
 }
 .file-upload {
   text-transform: uppercase;

@@ -205,6 +205,9 @@ export default {
 .checkbox > input:active {
   border: 2px solid #34495e;
 }
+.checkbox-container:hover {
+  transform: scale(0.9);
+}
 
 #icon {
   margin: 10px;
