@@ -1,6 +1,7 @@
 @import '_variables';
 #app {
   color: black;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 button {
   color: $text_color;
@@ -11,4 +12,8 @@ button {
 
 button :hover {
   border: 5px solid darkgray;
+}
+
+button:active {
+  background-color: $primary_color;
 }
