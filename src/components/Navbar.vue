@@ -48,6 +48,13 @@ $navbar_padding: 20px;
   color: white;
   background-color: $primary_color;
 }
+
+.navbar a:active {
+  background-color: $primary_color;
+  transform: translateY(8px);
+  opacity: 0.5;
+}
+
 #banner {
   position: absolute;
   top: 10px;
