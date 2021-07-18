@@ -30,6 +30,10 @@
       <li><b>canny</b> - Shows edges of objects in the image.</li>
       </ul>
     </p>
+        
+    <h2>Jupyter Notebooks</h2>
+    View some notebooks <a href="/jupyter">here</a> to see how the plugins can be used in python.
+    
     <h2>Command Line Interface</h2>
     <iframe src="https://snapcraft.io/lenna-cli/embedded?button=black&summary=true" frameborder="0" width="100%" height="380px" style="border: 1px solid #CCC; border-radius: 2px;"></iframe>
     <p>
@@ -44,7 +48,7 @@
     <a href="https://sourceforge.net/projects/lenna/files/latest/download"><img alt="Download lenna" src="https://a.fsdn.com/con/app/sf-download-button" width=276 height=48 srcset="https://a.fsdn.com/con/app/sf-download-button?button_size=2x 2x"></a>
     <br />
     <iframe src="https://snapcraft.io/lenna/embedded?button=black&summary=true&screenshot=true" frameborder="0" width="100%" height="620px" style="border: 1px solid #CCC; border-radius: 2px;"></iframe>
-    
+
   </div>
 </template>
 
