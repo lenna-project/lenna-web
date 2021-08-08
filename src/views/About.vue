@@ -49,6 +49,13 @@
     <br />
     <iframe src="https://snapcraft.io/lenna/embedded?button=black&summary=true&screenshot=true" frameborder="0" width="100%" height="620px" style="border: 1px solid #CCC; border-radius: 2px;"></iframe>
 
+    <h2>Desktop Web App</h2>
+    <a href="https://github.com/lenna-project/lenna-gui/releases/latest">Lenna GUI</a>
+    This App supports convertion of images in folders.
+    <br />
+    You can find installers for Mac, Linux and Windows.
+    <br />
+
   </div>
 </template>
 
