@@ -3,7 +3,7 @@
     <img id="icon" :src="src" />
   </div>
 </template>
-<script>
+<script lang="ts">
 export default {
   props: {
     src: {
