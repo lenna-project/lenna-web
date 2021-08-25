@@ -11,13 +11,14 @@
     </label>
   </div>
 </template>
-<script>
+<script lang="ts">
 export default {
   props: {
     checked: {
       type: Boolean,
     },
   },
+  emits: ["update:checked"]
 };
 </script>
 <style scoped lang="scss">
