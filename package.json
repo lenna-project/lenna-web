@@ -6,7 +6,9 @@
     "start": "webpack-cli serve",
     "serve": "serve dist -p 3001",
     "build": "webpack --mode production",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@babel/core": "^7.15.0",
@@ -28,6 +30,14 @@
     "yaml": "^1.10.2"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^6.3.7",
+    "@storybook/addon-essentials": "^6.3.7",
+    "@storybook/addon-links": "^6.3.7",
+    "@storybook/builder-webpack5": "^6.3.7",
+    "@storybook/manager-webpack5": "^6.3.7",
+    "@storybook/preset-scss": "^1.0.3",
+    "@storybook/preset-typescript": "^3.0.0",
+    "@storybook/vue3": "^6.3.7",
     "@types/file-saver": "^2.0.3",
     "@types/nprogress": "^0.2.0",
     "@vue/compiler-sfc": "^3.2.6",
