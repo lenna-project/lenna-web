@@ -15,7 +15,7 @@ module.exports = (env = {}) => ({
   },
   target: "web",
   entry: {
-    "lenna-web": path.join(__dirname, "src/main.js"),
+    "lenna-web": path.join(__dirname, "src/main.ts"),
   },
   // output: {
   //   path: path.resolve(__dirname, './dist'),
@@ -25,7 +25,7 @@ module.exports = (env = {}) => ({
     publicPath: "auto",
   },
   resolve: {
-    extensions: [".vue", ".jsx", ".js", ".json"],
+    extensions: [".vue", ".jsx", ".js", ".json", ".ts"],
     alias: {
       "@": path.join(__dirname, "src/"),
       // this isn't technically needed, since the default `vue` entry for bundlers

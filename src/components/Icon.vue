@@ -7,7 +7,7 @@
 export default {
   props: {
     src: {
-      type: Object,
+      type: [Object, String],
     },
   },
 };
