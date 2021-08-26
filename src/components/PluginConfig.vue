@@ -8,6 +8,7 @@
           :placeholder="c.key"
           v-model.number="c.value"
           @change="updateConfig()"
+          v-bind:id="c.key"
         />
       </div>
     </div>
@@ -51,8 +52,10 @@ export default {
 .parameter {
   display: flex;
   justify-content: space-between;
+  min-height: 50px;
 }
 .parameter input {
+  min-width: 50px;
   max-width: 100px;
 }
 </style>
