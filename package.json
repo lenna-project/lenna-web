@@ -7,7 +7,7 @@
     "serve": "serve dist -p 3001",
     "build": "webpack --mode production",
     "clean": "rm -rf dist",
-    "test": "jest",
+    "test": "jest --coverage",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "lint": "eslint --ext .ts,.vue src"

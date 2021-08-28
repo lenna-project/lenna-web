@@ -1,0 +1,21 @@
+on: [push]
+
+name: Test_Coverage
+
+jobs:
+  test_coverage:
+    name: Test and Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+      - name: Install npm dependencies
+        run: npm ci
+      - name: Build App
+        run: npm run test
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
