@@ -1,4 +1,5 @@
 <template>
+<div>
   <button v-on:click="generateConfigUrlBase64" v-if="plugins">
     generate actual config url
   </button>
@@ -7,6 +8,7 @@
   </div>
 
   <button v-on:click="generateLennaConfig">lenna.yml</button>
+</div>
 </template>
 
 <script>

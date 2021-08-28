@@ -1,7 +1,8 @@
 import { loadConfig, saveConfig } from "../storage";
+import { LennaPlugin } from '../../models/plugin';
 
 test('should save and load', () => {
-    let fooPlugin: LennaPlugin = {
+    const fooPlugin: LennaPlugin = {
         name: 'foo',
         enabled: true,
         config: {}
@@ -20,7 +21,7 @@ test('should save and load', () => {
 })
 
 test('should load non existing', () => {
-    let fooPlugin: LennaPlugin = {
+    const fooPlugin: LennaPlugin = {
         name: 'foo',
         enabled: true,
         config: {}

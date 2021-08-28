@@ -1,5 +1,5 @@
 test('config', () => {
-    let config: Config = {
+    const config: Config = {
         name: 'foo',
         enabled: true,
         config: {}

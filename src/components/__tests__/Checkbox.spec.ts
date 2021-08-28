@@ -8,7 +8,7 @@ test('checked', async () => {
             checked: false
         }
     })
-    let checkboxInput = wrapper.find('input[type="checkbox"]');
+    const checkboxInput = wrapper.find('input[type="checkbox"]');
     await checkboxInput.trigger("click");
     expect(wrapper.text()).toContain('')
 })

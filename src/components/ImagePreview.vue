@@ -34,18 +34,35 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from "vue";
 import VueEasyLightbox from "vue-easy-lightbox";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import { useToast } from "vue-toastification";
-export default {
+
+interface ImagePreviewImage {
+  name: string
+}
+
+declare interface ImagePreviewData {
+  imgs: string[];
+  visible: boolean;
+  index: number;
+  filetype: string;
+  options: Object[];
+}
+
+export default defineComponent({
   components: {
     VueEasyLightbox,
   },
   props: {
-    images: Array,
+    images: {
+      type: Array as () => Array<ImagePreviewImage>,
+      required: true,
+    },
   },
-  data() {
+  data(): ImagePreviewData {
     return {
       imgs: [],
       visible: false,
@@ -61,21 +78,23 @@ export default {
     };
   },
   methods: {
-    createObjectURL(image) {
+    createObjectURL(image: ImagePreviewImage) {
       return URL.createObjectURL(image);
     },
-    async safeImage(cli, file, format) {
+    async safeImage(cli: any, file: any, format: string) {
       let data = await file
         .arrayBuffer()
-        .then((image) => new Uint8Array(image));
+        .then((image: any) => new Uint8Array(image));
       return cli.save(data, format);
     },
     async downloadZip() {
+      // eslint-disable-next-line no-undef
       let cli = await System.import(
         "https://lenna.app/lenna-cli/remoteEntry.js"
-      ).then((module) => {
+      ).then((module: any) => {
+        // eslint-disable-next-line no-undef
         module.init(__webpack_require__.S["default"]);
-        return module.get("default").then((cli) => {
+        return module.get("default").then((cli: Function) => {
           return cli();
         });
       });
@@ -88,7 +107,7 @@ export default {
       }
       let compressedCount = 0;
       toast.info(`compressing of ${this.images.length} images started`);
-      let promises = this.images.map((image) => {
+      let promises = this.images.map((image: ImagePreviewImage) => {
         let type = `image/${this.filetype}`;
 
         return this.safeImage(cli, image, this.filetype).then(
@@ -113,7 +132,7 @@ export default {
     show() {
       this.visible = true;
     },
-    showImg(index) {
+    showImg(index: any) {
       this.index = index;
       this.visible = true;
     },
@@ -134,7 +153,7 @@ export default {
       immediate: true,
     },
   },
-};
+});
 </script>
 <style scoped lang="scss">
 @import "@/styles/_variables.scss";

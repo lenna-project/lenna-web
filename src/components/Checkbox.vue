@@ -12,14 +12,26 @@
   </div>
 </template>
 <script lang="ts">
-export default {
+import { defineComponent } from "vue";
+export default defineComponent({
+  name: "Checkbox",
   props: {
     checked: {
       type: Boolean,
     },
   },
-  emits: ["update:checked"]
-};
+  emits: ["update:checked"],
+  computed: {
+    value: {
+      get() {
+        return this.checked
+      },
+      set(value: boolean) {
+        this.$emit('update:checked', value)
+      }
+    }
+  }
+});
 </script>
 <style scoped lang="scss">
 .checkbox-container {

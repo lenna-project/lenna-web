@@ -25,7 +25,7 @@ module.exports = (env = {}) => ({
     publicPath: "auto",
   },
   resolve: {
-    extensions: [".vue", ".jsx", ".js", ".json", ".ts"],
+    extensions: ['.tsx', '.ts', '.js'],
     alias: {
       "@": path.join(__dirname, "src/"),
       // this isn't technically needed, since the default `vue` entry for bundlers
@@ -37,7 +37,14 @@ module.exports = (env = {}) => ({
   },
   module: {
     rules: [
-      { test: /\.tsx?$/, loader: "ts-loader" },
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        options: {
+          appendTsSuffixTo: [/\.vue$/],
+        },
+        exclude: /node_modules/,
+      },
       {
         test: /\.vue$/,
         loader: "vue-loader",
@@ -116,7 +123,9 @@ module.exports = (env = {}) => ({
     }),
   ],
   devServer: {
-    contentBase: path.join(__dirname),
+    proxy: {
+      "*": path.join(__dirname),
+    },
     compress: true,
     port: 3001,
     hot: true,

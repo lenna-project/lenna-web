@@ -1,5 +1,7 @@
+import { LennaPlugin } from "@/models/plugin";
+
 const saveConfig = (plugin: LennaPlugin) => {
-    let config: Config = {
+    const config: Config = {
         name: plugin.name,
         enabled: plugin.enabled,
         config: plugin.config,
@@ -8,9 +10,9 @@ const saveConfig = (plugin: LennaPlugin) => {
 };
 
 const loadConfig = (plugin: LennaPlugin): LennaPlugin => {
-    let savedConfig = localStorage.getItem(plugin.name);
+    const savedConfig = localStorage.getItem(plugin.name);
     if (savedConfig) {
-        let config: Config = JSON.parse(savedConfig);
+        const config: Config = JSON.parse(savedConfig);
         plugin.enabled = config.enabled;
         plugin.config = Object.assign(plugin.config, config.config);
     }
@@ -29,7 +31,7 @@ const loadConfigFromParams = (plugin: LennaPlugin, params: any): LennaPlugin => 
 };
 
 const listPlugins = (): string[] => {
-    let plugins = localStorage.getItem("plugins") || "[]";
+    const plugins = localStorage.getItem("plugins") || "[]";
     return JSON.parse(plugins);
 }
 

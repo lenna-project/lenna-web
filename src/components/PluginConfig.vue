@@ -16,21 +16,32 @@
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+
+interface Config {
+  key: string,
+  value: any
+}
+
+declare interface PluginConfigData {
+  config: Config[]
+}
+
+export default defineComponent({
   name: "PluginConfig",
   props: {
     defaultConfig: Object,
   },
-  data() {
+  data(): PluginConfigData {
     return {
       config: [],
     };
   },
   methods: {
     async updateConfig() {
-      let config = {};
+      let config: Map<string, Object> = new Map();
       for (let c of this.config) {
-        config[c.key] = c.value;
+        config.set(c.key, c.value);
       }
       this.$emit("changeConfig", config);
     },
@@ -42,7 +53,7 @@ export default {
     }
     this.updateConfig();
   },
-};
+});
 </script>
 
 <style scoped>

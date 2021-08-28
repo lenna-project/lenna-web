@@ -3,7 +3,7 @@
     <Icon v-if="icon && !enabled" :src="icon" />
     <div>
       <h2>{{ plugin.name() }}</h2>
-      <Checkbox v-model:checked="enabled" />
+      <Checkbox :checked="enabled" @update:checked="updateEnabled($event)" />
     </div>
     <div v-if="enabled">
       <span>{{ plugin.description() }}</span>
@@ -27,29 +27,27 @@
 </template>
 
 <script lang="ts">
-import { shallowRef, Ref } from "vue";
+import { shallowRef, Ref, defineComponent } from "vue";
 import PluginConfig from "./PluginConfig.vue";
 import Checkbox from "./Checkbox.vue";
 import Icon from "./Icon.vue";
-import { loadConfig, loadConfigFromParams, saveConfig } from "@/controllers/storage";
+import {
+  loadConfig,
+  loadConfigFromParams,
+  saveConfig,
+} from "@/controllers/storage";
 
 declare interface PluginData {
-  ui: Ref,
-  icon: Ref,
-  processor: any,
-  enabled: boolean,
-  keyCounter: number,
-  pluginKey: string,
-  plugin: any,
-  name: string,
-  config: Object
+  ui: Ref;
+  icon: Ref;
+  processor: any;
+  enabled: boolean;
+  keyCounter: number;
+  pluginKey: string;
+  config: Object;
 }
 
-const createUI = (component: any) => {
-  return component;
-};
-
-export default {
+export default defineComponent({
   name: "Plugin",
   props: {
     name: String,
@@ -70,18 +68,16 @@ export default {
       enabled: false,
       keyCounter: 0,
       pluginKey: "",
-      plugin: null,
-      name: "",
-      config: {}
+      config: {},
     };
   },
   methods: {
     async loadDefaultConfig() {
-      this.plugin.defaultConfig().then((defaultConfig: any) => {
+      this.plugin?.defaultConfig().then((defaultConfig: any) => {
         if (this.defaultConfig && this.defaultConfig.length > 0) {
           const { enabled, config } = loadConfigFromParams(
             {
-              name: this.name,
+              name: this.name || "",
               enabled: true,
               config: defaultConfig,
             },
@@ -91,7 +87,8 @@ export default {
           this.enabled = enabled || false;
         } else {
           const { enabled, config } = loadConfig({
-            name: this.name,
+            name: this.name || "",
+            enabled: false,
             config: defaultConfig,
           });
           this.config = config;
@@ -100,30 +97,32 @@ export default {
       });
     },
     async loadUI() {
-      if (this.plugin.ui && this.url) {
+      if (this.plugin?.ui && this.url) {
+        // eslint-disable-next-line no-undef
         System.import(this.url)
           .then((module: any) => {
-            module.get("./Widget").then((widget: any) => {
-              this.ui = createUI(this.name, widget().default);
+            module.get("./Widget").then((widget: Function) => {
+              this.ui = widget().default;
             });
           })
           .catch((e: any) => console.log(e));
       }
-      if (this.plugin.icon) {
+      if (this.plugin?.icon) {
         this.icon = this.plugin.icon();
       }
     },
     async updateConfig(config: Object) {
       saveConfig({
-        name: this.name,
+        name: this.name || "",
         enabled: this.enabled,
         config: config,
       });
       this.$emit("changeConfig", config);
     },
     async updateEnabled(enabled: boolean) {
+      this.enabled = enabled;
       saveConfig({
-        name: this.name,
+        name: this.name || "",
         enabled: this.enabled,
         config: this.config,
       });
@@ -131,18 +130,19 @@ export default {
     },
   },
   created() {
+    console.log(this.name);
     this.loadUI();
     this.loadDefaultConfig();
   },
   watch: {
     defaultConfig: {
-      handler: function (val) {
+      handler: function () {
         this.keyCounter += 1;
-        this.pluginKey = this.name + this.keyCounter;
+        this.pluginKey = (this.name || "") + this.keyCounter;
       },
     },
   },
-};
+});
 </script>
 <style scoped lang="scss">
 @import "@/styles/_variables.scss";

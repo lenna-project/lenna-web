@@ -1,7 +1,9 @@
 <template>
+  <div>
   <Navbar />
   <router-view />
   <Footer />
+  </div>
 </template>
 <script>
 import { defineComponent } from "vue";

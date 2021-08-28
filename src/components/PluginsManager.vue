@@ -6,7 +6,7 @@
           :name="item.name"
           :plugin="item.plugin"
           :url="item.url"
-          :defaultConfig="defaultConfig"
+          :defaultConfig="configs"
           @changeEnabled="changeEnabled(item.name, $event)"
           @changeConfig="changeConfig(item.name, $event)"
         />
@@ -15,12 +15,22 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
 import { VueDraggableNext } from "vue-draggable-next";
 import Plugin from "@/components/Plugin.vue";
 import { loadConfig, listPlugins } from "@/controllers/storage";
 import { useToast } from "vue-toastification";
+import {LennaPlugin} from "@/models/plugin";
+
+interface Configs {
+    [key: string]: any
+}
+
+declare interface PluginsManagerData {
+  plugins: LennaPlugin[];
+  configs: Configs;
+}
 
 export default defineComponent({
   name: "PluginsManager",
@@ -29,21 +39,23 @@ export default defineComponent({
     pluginsmap: String,
     pluginsjson: String,
     defaultConfig: Object,
-    defaultPlugins: Array,
+    defaultPlugins: Array as () => Array<string>,
   },
   components: {
     Plugin,
     draggable: VueDraggableNext,
   },
-  data() {
+  data(): PluginsManagerData {
     return {
       plugins: [],
+      configs: {},
     };
   },
   beforeMount() {
     let tasks = [this.getPluginsmap(), this.getPluginsjson()];
+    this.configs = this.defaultConfig || {};
     if (this.defaultPlugins) {
-      this.defaultPlugins.forEach((plugin) => {
+      this.defaultPlugins.forEach((plugin: string) => {
         tasks.push(this.importPlugin(plugin, plugin));
       });
     }
@@ -64,33 +76,38 @@ export default defineComponent({
     //this.importPlugin("local", "http://localhost:3002/remoteEntry.js");
   },
   methods: {
-    changeEnabled(name, enabled) {
-      let plugin = this.plugins.find((o) => o.name === name);
-      plugin.enabled = enabled;
+    changeEnabled(name: string, enabled: boolean) {
+      let plugin = this.plugins.find((o: any) => o.name === name);
+      if (plugin) {
+        plugin.enabled = enabled;
+      }
     },
-    changeConfig(name, config) {
-      let plugin = this.plugins.find((o) => o.name === name);
-      plugin.config = config;
+    changeConfig(name: string, config: Object) {
+      let plugin = this.plugins.find((o: LennaPlugin) => o.name === name);
+      if (plugin) {
+        plugin.config = config;
+      }
     },
-    raw(comp) {
+    raw(comp: any) {
       return comp;
     },
-    async importPlugin(key, url) {
-      return System.import(url).then(async (module) => {
+    async importPlugin(key: string, url: string) {
+      // eslint-disable-next-line no-undef
+      return System.import(url).then(async (module: any) => {
+        // eslint-disable-next-line no-undef
         await module.init(__webpack_require__.S["default"]);
-        return module.get("default").then((plugin) => {
-          let pluginConfig = {
+        return module.get("default").then((plugin: any) => {
+          let pluginConfig = loadConfig({
             name: key,
             url: url,
             plugin: plugin(),
             enabled: false,
             config: {},
-          };
-          pluginConfig = loadConfig(pluginConfig);
+          });
           if (this.filter) {
             if (pluginConfig.name.includes(this.filter)) {
               pluginConfig.enabled = true;
-              this.defaultConfig.push({
+              this.configs.push({
                 name: pluginConfig.name,
                 enabled: true,
                 config: pluginConfig.config,
@@ -110,19 +127,19 @@ export default defineComponent({
         const data = await res.json();
         for (const key in data.imports) {
           tasks.push(
-            System.import(key).then((plugin) => {
-              let pluginConfig = {
+            // eslint-disable-next-line no-undef
+            System.import(key).then((plugin: any) => {
+              let pluginConfig = loadConfig({
                 name: key,
                 url: data.imports[key],
                 plugin: plugin,
                 enabled: false,
                 config: {},
-              };
-              pluginConfig = loadConfig(pluginConfig);
+              });
               if (this.filter) {
                 if (pluginConfig.name.includes(this.filter)) {
                   pluginConfig.enabled = true;
-                  this.defaultConfig.push({
+                  this.configs.push({
                     name: pluginConfig.name,
                     enabled: true,
                     config: pluginConfig.config,
@@ -139,7 +156,7 @@ export default defineComponent({
       return Promise.all(tasks);
     },
     async getPluginsjson() {
-      let tasks = []
+      let tasks = [];
       if (this.pluginsjson) {
         const res = await fetch(this.pluginsjson);
         const data = await res.json();

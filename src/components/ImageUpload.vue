@@ -39,12 +39,19 @@ import { defineComponent } from "vue";
 import FileUpload from "vue-upload-component";
 import VueEasyLightbox from "vue-easy-lightbox";
 
+declare interface ImageUploadData {
+  files: Object[];
+  images: Object[];
+  visible: boolean;
+  index: number;
+}
+
 export default defineComponent({
   components: {
     FileUpload,
     VueEasyLightbox,
   },
-  data() {
+  data(): ImageUploadData {
     return {
       files: [],
       images: [],
@@ -53,14 +60,15 @@ export default defineComponent({
     };
   },
   methods: {
-    inputFile(newFile, oldFile, prevent) {
+    // eslint-disable-next-line no-unused-vars
+    inputFile(newFile: any, oldFile: any, prevent: any) {
       this.images.push(newFile.url);
       this.$emit("changeImage", newFile);
     },
-    inputFilter(newFile, oldFile, prevent) {
+    inputFilter(newFile: any, oldFile: any, prevent: any) {
       if (newFile && !oldFile) {
         if (!/\.(gif|jpg|jpeg|png|webp)$/i.test(newFile.name)) {
-          this.alert("Your choice is not a picture");
+          alert("Your choice is not a picture");
           return prevent();
         }
       }
@@ -72,7 +80,7 @@ export default defineComponent({
         }
       }
     },
-    showImg(index) {
+    showImg(index: number) {
       this.index = index;
       this.visible = true;
     },

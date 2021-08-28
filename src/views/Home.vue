@@ -1,5 +1,5 @@
 <template>
-  <div class="v-step-0 v-step-1 v-step-2">
+  <div>
     <Slide>
       <button v-on:click="loadPlugin(pluginUrl)">add plugin</button>
       <input
@@ -42,11 +42,10 @@
         <div class="plus radius" v-on:click="onMorePlugins()"></div>
       </div>
     </div>
-    <v-tour name="Home" :steps="steps"></v-tour>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent, ref } from "vue";
 import * as NProgress from "nprogress";
 import { Slide } from "vue3-burger-menu";
@@ -56,6 +55,19 @@ import ImageUpload from "@/components/ImageUpload.vue";
 import ImagePreview from "@/components/ImagePreview.vue";
 import Config from "@/components/Config.vue";
 import Help from "@/components/Help.vue";
+
+interface Image {
+  name: string
+}
+
+declare interface HomeData {
+  pluginUrl: string;
+  just: string | null;
+  defaultConfig: [];
+  defaultPlugins: string[];
+  sourceImages: Image[];
+  resultImages: Image[];
+}
 
 export default defineComponent({
   name: "Home",
@@ -67,84 +79,50 @@ export default defineComponent({
     Config,
     Help,
   },
-  data() {
+  data(): HomeData {
     return {
       pluginUrl: "",
       just: null,
       defaultConfig: [],
-      defaultPlugins: null,
+      defaultPlugins: [],
       sourceImages: [],
       resultImages: [],
-      steps: [
-        {
-          target: ".v-step-0",
-          header: {
-            title: "Get Started",
-          },
-          content: `Discover <strong>Lenna App</strong>!`,
-        },
-        {
-          target: ".v-step-1",
-          content:
-            "Get some information about this page and links to project page and desktop app.",
-        },
-        {
-          target: ".v-step-3",
-          content: "Place images you want convert from your computer here.",
-        },
-        {
-          target: ".v-step-4",
-          content:
-            "Change the config on how you want the images to be converted.",
-        },
-        {
-          target: ".v-step-5",
-          content: "Press the button to start convertion.",
-        },
-        {
-          target: ".v-step-6",
-          content: "You can view the result here and download the images.",
-        },
-      ],
     };
   },
-  mounted: function () {
-    let madeTour = localStorage.getItem("madeTour");
-    console.log(madeTour)
-    if (!madeTour) {
-      localStorage.setItem("madeTour", true);
-      this.$tours["Home"].start();
-    }
-  },
   setup: () => {
-    const imageUpload = ref(null);
-    const pluginsManager = ref(null);
+    const imageUpload = ref(ImageUpload);
+    const pluginsManager = ref(PluginsManager);
     return {
       imageUpload,
       pluginsManager,
     };
   },
   created() {
-    if (this.$route.query.config) {
-      this.defaultConfig = JSON.parse(atob(this.$route.query.config));
+    if (this.$route.query["config"]) {
+      this.defaultConfig = JSON.parse(
+        // eslint-disable-next-line no-undef
+        Buffer.from(this.$route.query["config"].toString(), "base64").toString(
+          "binary"
+        )
+      );
       console.log(this.defaultConfig);
     }
     if (this.$route.query.plugin) {
-      this.defaultPlugins = [this.$route.query.plugin];
+      this.defaultPlugins = [this.$route.query.plugin.toString()];
     }
     if (this.$route.query.just) {
-      this.just = this.$route.query.just;
+      this.just = this.$route.query.just.toString();
     }
   },
   methods: {
-    loadPlugin(pluginUrl) {
+    loadPlugin(pluginUrl: string) {
       console.log("loaded plugin: ", pluginUrl);
       this.pluginsManager.importPlugin(pluginUrl, pluginUrl);
     },
     onMorePlugins() {
       window.location.replace("/marketplace");
     },
-    changeImages(files) {
+    changeImages(files: any) {
       this.sourceImages.push(files.file);
     },
     async processImages() {
@@ -174,13 +152,12 @@ export default defineComponent({
         toast.info(`converted ${convertedCount} images`);
       });
     },
-    async process(imageFile) {
+    async process(imageFile: any) {
       NProgress.configure({ parent: "#process" });
       NProgress.start();
       let img = new Uint8Array(await imageFile.arrayBuffer());
-      for (let id in this.pluginsManager.plugins) {
+      for (let plugin of this.pluginsManager.plugins) {
         NProgress.inc(0.2);
-        let plugin = this.pluginsManager.plugins[id];
         if (plugin.enabled) {
           img = await plugin.plugin.process(plugin.config, img);
         }
