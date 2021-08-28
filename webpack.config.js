@@ -6,7 +6,7 @@ const { ModuleFederationPlugin } = require("webpack").container;
 const CopyPlugin = require("copy-webpack-plugin");
 const deps = require("./package.json").dependencies;
 
-module.exports = (env = {}) => ({
+module.exports = {
   mode: "development",
   cache: false,
   devtool: "source-map",
@@ -25,7 +25,7 @@ module.exports = (env = {}) => ({
     publicPath: "auto",
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: [".tsx", ".ts", ".js"],
     alias: {
       "@": path.join(__dirname, "src/"),
       // this isn't technically needed, since the default `vue` entry for bundlers
@@ -39,7 +39,7 @@ module.exports = (env = {}) => ({
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        loader: 'ts-loader',
+        loader: "ts-loader",
         options: {
           appendTsSuffixTo: [/\.vue$/],
         },
@@ -136,4 +136,4 @@ module.exports = (env = {}) => ({
         "X-Requested-With, content-type, Authorization",
     },
   },
-});
+};
