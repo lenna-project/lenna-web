@@ -19,7 +19,7 @@
 import { defineComponent } from "vue";
 import { VueDraggableNext } from "vue-draggable-next";
 import Plugin from "@/components/Plugin.vue";
-import { loadConfig, listPlugins } from "../config";
+import { loadConfig, listPlugins } from "@/controllers/storage";
 import { useToast } from "vue-toastification";
 
 export default defineComponent({

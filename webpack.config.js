@@ -37,6 +37,7 @@ module.exports = (env = {}) => ({
   },
   module: {
     rules: [
+      { test: /\.tsx?$/, loader: "ts-loader" },
       {
         test: /\.vue$/,
         loader: "vue-loader",

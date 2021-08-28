@@ -26,14 +26,26 @@
   </div>
 </template>
 
-<script>
-import { shallowRef } from "vue";
+<script lang="ts">
+import { shallowRef, Ref } from "vue";
 import PluginConfig from "./PluginConfig.vue";
 import Checkbox from "./Checkbox.vue";
 import Icon from "./Icon.vue";
-import { loadConfig, loadConfigFromParams, saveConfig } from "@/config";
+import { loadConfig, loadConfigFromParams, saveConfig } from "@/controllers/storage";
 
-const createUI = (name, component) => {
+declare interface PluginData {
+  ui: Ref,
+  icon: Ref,
+  processor: any,
+  enabled: boolean,
+  keyCounter: number,
+  pluginKey: string,
+  plugin: any,
+  name: string,
+  config: Object
+}
+
+const createUI = (component: any) => {
   return component;
 };
 
@@ -50,7 +62,7 @@ export default {
     Icon,
     PluginConfig,
   },
-  data() {
+  data(): PluginData {
     return {
       ui: shallowRef(null),
       icon: shallowRef(null),
@@ -58,47 +70,50 @@ export default {
       enabled: false,
       keyCounter: 0,
       pluginKey: "",
-      config: null,
+      plugin: null,
+      name: "",
+      config: {}
     };
   },
   methods: {
     async loadDefaultConfig() {
-      this.plugin.defaultConfig().then((defaultConfig) => {
+      this.plugin.defaultConfig().then((defaultConfig: any) => {
         if (this.defaultConfig && this.defaultConfig.length > 0) {
           const { enabled, config } = loadConfigFromParams(
             {
               name: this.name,
+              enabled: true,
               config: defaultConfig,
             },
             this.defaultConfig
           );
           this.config = config;
-          this.enabled = enabled;
+          this.enabled = enabled || false;
         } else {
           const { enabled, config } = loadConfig({
             name: this.name,
             config: defaultConfig,
           });
           this.config = config;
-          this.enabled = enabled;
+          this.enabled = enabled || false;
         }
       });
     },
     async loadUI() {
       if (this.plugin.ui && this.url) {
         System.import(this.url)
-          .then((module) => {
-            module.get("./Widget").then((widget) => {
+          .then((module: any) => {
+            module.get("./Widget").then((widget: any) => {
               this.ui = createUI(this.name, widget().default);
             });
           })
-          .catch((e) => console.log(e));
+          .catch((e: any) => console.log(e));
       }
       if (this.plugin.icon) {
         this.icon = this.plugin.icon();
       }
     },
-    async updateConfig(config) {
+    async updateConfig(config: Object) {
       saveConfig({
         name: this.name,
         enabled: this.enabled,
@@ -106,7 +121,7 @@ export default {
       });
       this.$emit("changeConfig", config);
     },
-    async updateEnabled(enabled) {
+    async updateEnabled(enabled: boolean) {
       saveConfig({
         name: this.name,
         enabled: this.enabled,
