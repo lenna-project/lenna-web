@@ -1,4 +1,5 @@
 import { LennaPlugin } from "@/models/plugin";
+import { Config } from "@/models/config";
 
 const saveConfig = (plugin: LennaPlugin) => {
     const config: Config = {

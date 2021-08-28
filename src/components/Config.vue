@@ -1,22 +1,27 @@
 <template>
-<div>
-  <button v-on:click="generateConfigUrlBase64" v-if="plugins">
-    generate actual config url
-  </button>
-  <div class="config" v-if="base64config">
-    <textarea v-model="base64config" :readonly="true"></textarea>
-  </div>
+  <div>
+    <button v-on:click="generateConfigUrlBase64" v-if="plugins">
+      generate actual config url
+    </button>
+    <div class="config" v-if="base64config">
+      <textarea v-model="base64config" :readonly="true"></textarea>
+    </div>
 
-  <button v-on:click="generateLennaConfig">lenna.yml</button>
-</div>
+    <button v-on:click="generateLennaConfig">lenna.yml</button>
+  </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import YAML from "yaml";
-export default {
-  name: "Plugin",
+import { LennaPlugin } from "@/models/plugin";
+export default defineComponent({
+  name: "Config",
   props: {
-    plugins: Array,
+    plugins: {
+      type: Array as () => Array<LennaPlugin>,
+      required: true
+    } 
   },
   data() {
     return {
@@ -25,7 +30,7 @@ export default {
     };
   },
   methods: {
-    download(filename, text) {
+    download(filename: string, text: string) {
       var element = document.createElement("a");
       element.setAttribute(
         "href",
@@ -57,21 +62,21 @@ export default {
     },
     generateLennaConfig() {
       let plugins = [];
-      for (let id in this.plugins) {
-        let plugin = this.plugins[id];
+      for (let plugin of this.plugins) {
         if (plugin.enabled) {
-          let config = plugin.config;
-          config.id = plugin.plugin.name();
+          let config: any = plugin.config;
+          config.name = plugin.plugin.name();
           plugins.push(config);
         }
       }
-      let comment = "# https://github.com/lenna-project/lenna-cli\n"
-      + "# lenna-cli images_path --config lenna.yml\n"
-      let lenna_yml = YAML.stringify({"pipeline": plugins });
+      let comment =
+        "# https://github.com/lenna-project/lenna-cli\n" +
+        "# lenna-cli images_path --config lenna.yml\n";
+      let lenna_yml = YAML.stringify({ pipeline: plugins });
       this.download("lenna.yml", comment + lenna_yml);
     },
   },
-};
+});
 </script>
 
 <style scoped>

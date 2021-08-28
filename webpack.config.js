@@ -38,7 +38,7 @@ module.exports = (env = {}) => ({
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
+        test: /\.(ts|tsx)$/,
         loader: 'ts-loader',
         options: {
           appendTsSuffixTo: [/\.vue$/],

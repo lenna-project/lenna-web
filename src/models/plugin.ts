@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 export interface LennaPlugin {
     name: string;
     url?: string;
