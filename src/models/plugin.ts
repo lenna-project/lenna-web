@@ -6,4 +6,5 @@ export interface LennaPlugin {
     enabled: boolean;
     config: Object;
     plugin?: PluginModule;
+    process?: Function;
 }

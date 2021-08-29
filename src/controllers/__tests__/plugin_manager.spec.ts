@@ -7,7 +7,8 @@ test('should filter module', () => {
         description: () => "foo",
         defaultConfig: () => {},
         ui: null,
-        icon: () => ""
+        icon: () => "",
+        process: () => {}
     }
 
     const barPlugin: PluginModule = {
@@ -15,7 +16,8 @@ test('should filter module', () => {
         description: () => "bar",
         defaultConfig: () => {},
         ui: null,
-        icon: () => ""
+        icon: () => "",
+        process: () => {}
     }
 
     const pluginManager: PluginManager = new PluginManager("bar");
@@ -33,7 +35,8 @@ test('should change config', () => {
         description: () => "foo",
         defaultConfig: () => {},
         ui: null,
-        icon: () => ""
+        icon: () => "",
+        process: () => {}
     }
 
     const fooConfig = {
@@ -52,5 +55,4 @@ test('should change config', () => {
         width: 200,
         height: 300
     })
-
 })

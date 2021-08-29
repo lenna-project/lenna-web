@@ -54,10 +54,8 @@ import ImagePreview from "@/components/ImagePreview.vue";
 import Config from "@/components/Config.vue";
 import Help from "@/components/Help.vue";
 import { PluginManager } from "@/controllers/plugin_manager";
-
-interface Image {
-  name: string
-}
+import { Image } from "../models/image";
+import { processImages } from "../controllers/processor";
 
 declare interface HomeData {
   pluginUrl: string;
@@ -66,7 +64,7 @@ declare interface HomeData {
   defaultPlugins: string[];
   sourceImages: Image[];
   resultImages: Image[];
-  pluginManager: PluginManager
+  pluginManager: PluginManager;
 }
 
 export default defineComponent({
@@ -87,7 +85,7 @@ export default defineComponent({
       defaultPlugins: [],
       sourceImages: [],
       resultImages: [],
-      pluginManager: new PluginManager("")
+      pluginManager: new PluginManager(""),
     };
   },
   setup: () => {
@@ -126,10 +124,14 @@ export default defineComponent({
     },
 
     loadPluginsMap() {
-      this.pluginManager.importPluginMap("https://lenna.app/lenna-plugins/importmap.json");
+      this.pluginManager.importPluginMap(
+        "https://lenna.app/lenna-plugins/importmap.json"
+      );
     },
     loadPluginJson() {
-      this.pluginManager.importPluginsJson("https://lenna.app/lenna-plugins/plugins.json");
+      this.pluginManager.importPluginsJson(
+        "https://lenna.app/lenna-plugins/plugins.json"
+      );
     },
     onMorePlugins() {
       window.location.replace("/marketplace");
@@ -138,46 +140,30 @@ export default defineComponent({
       this.sourceImages.push(files.file);
     },
     async processImages() {
-      const toast = useToast();
-      const imageCount = this.sourceImages.length;
-      let convertedCount = 0;
-      toast.info(`converting ${imageCount} images started`);
-      this.resultImages = [];
-      let tasks = [];
-      for (let sourceImage of this.sourceImages) {
-        tasks.push(
-          this.process(sourceImage).then((image) => {
-            let file = new File([image], sourceImage.name, {
-              type: "image/png",
-            });
-            this.resultImages.push(file);
-            convertedCount++;
-            toast.success(
-              `converted ${convertedCount} of ${imageCount} images`
-            );
-          })
-        );
-      }
-      this.imageUpload.images = [];
-      this.sourceImages = [];
-      return Promise.all(tasks).then(() => {
-        toast.info(`converted ${convertedCount} images`);
-      });
-    },
-    async process(imageFile: any) {
       NProgress.configure({ parent: "#process" });
       NProgress.start();
-      let img = new Uint8Array(await imageFile.arrayBuffer());
-      for (let plugin of this.pluginsManager.plugins) {
-        NProgress.inc(0.2);
-        if (plugin.enabled) {
-          img = await plugin.plugin.process(plugin.config, img);
-        }
-      }
+      const toast = useToast();
+
+      await processImages(
+        this.sourceImages,
+        this.resultImages,
+        this.pluginManager.getPlugins(),
+        {
+          info: (message: string) => {
+            toast.info(message);
+          },
+          success: (message: string) => {
+            toast.success(message);
+          },
+        },
+          NProgress.set
+      );
+
+      this.imageUpload.images = [];
+      this.sourceImages = [];
 
       NProgress.done();
       NProgress.remove();
-      return img;
     },
   },
 });
