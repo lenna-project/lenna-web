@@ -23,10 +23,8 @@ test('should generate yaml', () => {
 
     const doc = YAML.parse(yaml_config);
 
-    console.log(doc);
     expect(doc.pipeline.length).toBe(1);
 })
-
 
 test('should generate base64', () => {
     const fooPlugin: LennaPlugin = {

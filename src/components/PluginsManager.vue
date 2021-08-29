@@ -19,10 +19,8 @@
 import { defineComponent } from "vue";
 import { VueDraggableNext } from "vue-draggable-next";
 import Plugin from "@/components/Plugin.vue";
-import { loadConfig, listPlugins } from "@/controllers/storage";
-import { useToast } from "vue-toastification";
 import {LennaPlugin} from "@/models/plugin";
-import { PluginModule } from "@/models/plugin_module";
+import { PluginManager } from "@/controllers/plugin_manager";
 
 interface Configs {
     [key: string]: any
@@ -36,10 +34,10 @@ declare interface PluginsManagerData {
 export default defineComponent({
   name: "PluginsManager",
   props: {
-    filter: String,
     pluginsmap: String,
     pluginsjson: String,
     defaultConfig: Object,
+    pluginManager: Object as () => PluginManager,
     defaultPlugins: Array as () => Array<string>,
   },
   components: {
@@ -53,27 +51,8 @@ export default defineComponent({
     };
   },
   beforeMount() {
-    let tasks = [this.getPluginsmap(), this.getPluginsjson()];
-    this.configs = this.defaultConfig || {};
-    if (this.defaultPlugins) {
-      this.defaultPlugins.forEach((plugin: string) => {
-        tasks.push(this.importPlugin(plugin, plugin));
-      });
-    }
-    listPlugins().forEach((plugin) => {
-      tasks.push(this.importPlugin(plugin, plugin));
-    });
-    Promise.all(tasks)
-      .then(() => {
-        if (this.plugins.length < 1) {
-          const toast = useToast();
-          toast.warning(
-            `No plugin enabled. Find more plugins in the marketplace.`
-          );
-        }
-      })
-      .catch(console.log);
-
+    
+    this.plugins = this.pluginManager?.getPlugins() || [];
     //this.importPlugin("local", "http://localhost:3002/remoteEntry.js");
   },
   methods: {
@@ -91,82 +70,6 @@ export default defineComponent({
     },
     raw(comp: any) {
       return comp;
-    },
-    async importPlugin(key: string, url: string) {
-      // eslint-disable-next-line no-undef
-      return System.import(url).then(async (module: any) => {
-        // eslint-disable-next-line no-undef
-        await module.init(__webpack_require__.S["default"]);
-        return module.get("default").then((plugin: Function) => {
-          let pluginConfig = loadConfig({
-            name: key,
-            url: url,
-            plugin: plugin(),
-            enabled: false,
-            config: {},
-          });
-          if (this.filter) {
-            if (pluginConfig.name.includes(this.filter)) {
-              pluginConfig.enabled = true;
-              this.configs.push({
-                name: pluginConfig.name,
-                enabled: true,
-                config: pluginConfig.config,
-              });
-              this.plugins.push(pluginConfig);
-            }
-          } else {
-            this.plugins.push(pluginConfig);
-          }
-        });
-      });
-    },
-    async getPluginsmap() {
-      let tasks = [];
-      if (this.pluginsmap) {
-        const res = await fetch(this.pluginsmap);
-        const data = await res.json();
-        for (const key in data.imports) {
-          tasks.push(
-            // eslint-disable-next-line no-undef
-            System.import(key).then((plugin: PluginModule) => {
-              let pluginConfig = loadConfig({
-                name: key,
-                url: data.imports[key],
-                plugin: plugin,
-                enabled: false,
-                config: {},
-              });
-              if (this.filter) {
-                if (pluginConfig.name.includes(this.filter)) {
-                  pluginConfig.enabled = true;
-                  this.configs.push({
-                    name: pluginConfig.name,
-                    enabled: true,
-                    config: pluginConfig.config,
-                  });
-                  this.plugins.push(pluginConfig);
-                }
-              } else {
-                this.plugins.push(pluginConfig);
-              }
-            })
-          );
-        }
-      }
-      return Promise.all(tasks);
-    },
-    async getPluginsjson() {
-      let tasks = [];
-      if (this.pluginsjson) {
-        const res = await fetch(this.pluginsjson);
-        const data = await res.json();
-        for (const key in data.plugins) {
-          let url = data.plugins[key];
-          tasks.push(this.importPlugin(key, url));
-        }
-      }
-      return Promise.all(tasks);
     },
   },
 });

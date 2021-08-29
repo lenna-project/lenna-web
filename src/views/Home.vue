@@ -30,11 +30,9 @@
         <PluginsManager
           class="v-step-4"
           ref="pluginsManager"
-          :filter="just"
+          :pluginManager="pluginManager"
           :defaultConfig="defaultConfig"
           :defaultPlugins="defaultPlugins"
-          pluginsmap="https://lenna.app/lenna-plugins/importmap.json"
-          pluginsjson="https://lenna.app/lenna-plugins/plugins.json"
         />
       </div>
       <div id="line">
@@ -55,6 +53,7 @@ import ImageUpload from "@/components/ImageUpload.vue";
 import ImagePreview from "@/components/ImagePreview.vue";
 import Config from "@/components/Config.vue";
 import Help from "@/components/Help.vue";
+import { PluginManager } from "@/controllers/plugin_manager";
 
 interface Image {
   name: string
@@ -67,6 +66,7 @@ declare interface HomeData {
   defaultPlugins: string[];
   sourceImages: Image[];
   resultImages: Image[];
+  pluginManager: PluginManager
 }
 
 export default defineComponent({
@@ -87,6 +87,7 @@ export default defineComponent({
       defaultPlugins: [],
       sourceImages: [],
       resultImages: [],
+      pluginManager: new PluginManager("")
     };
   },
   setup: () => {
@@ -111,13 +112,24 @@ export default defineComponent({
       this.defaultPlugins = [this.$route.query.plugin.toString()];
     }
     if (this.$route.query.just) {
+      this.pluginManager.filter = this.$route.query.just.toString();
       this.just = this.$route.query.just.toString();
     }
+    this.loadPluginsMap();
+    this.loadPluginJson();
   },
   methods: {
     loadPlugin(pluginUrl: string) {
       console.log("loaded plugin: ", pluginUrl);
-      this.pluginsManager.importPlugin(pluginUrl, pluginUrl);
+      //this.pluginsManager.importPlugin(pluginUrl, pluginUrl);
+      this.pluginManager.importPlugin(pluginUrl, pluginUrl);
+    },
+
+    loadPluginsMap() {
+      this.pluginManager.importPluginMap("https://lenna.app/lenna-plugins/importmap.json");
+    },
+    loadPluginJson() {
+      this.pluginManager.importPluginsJson("https://lenna.app/lenna-plugins/plugins.json");
     },
     onMorePlugins() {
       window.location.replace("/marketplace");
