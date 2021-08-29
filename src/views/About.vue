@@ -61,7 +61,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Help from "@/components/Help.vue";
+import Help from "../components/Help.vue";
 
 export default defineComponent({
   name: "About",
