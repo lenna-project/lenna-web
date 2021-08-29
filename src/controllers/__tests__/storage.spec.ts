@@ -1,5 +1,6 @@
-import { loadConfig, saveConfig } from "../storage";
+import { loadConfig, saveConfig, loadConfigFromParams } from "../storage";
 import { LennaPlugin } from '../../models/plugin';
+import { Config } from "@/models/config";
 
 test('should save and load', () => {
     const fooPlugin: LennaPlugin = {
@@ -35,4 +36,39 @@ test('should load non existing', () => {
 
     loadedPlugin = loadConfig(fooPlugin);
     expect(loadedPlugin.enabled).toBeTruthy();
+})
+
+test('should not load anything from params', () => {
+    const fooPlugin: LennaPlugin = {
+        name: 'foo',
+        enabled: true,
+        config: {}
+    }
+
+    const barConfig: Config = {
+        name: 'bar',
+        enabled: false,
+        config: {}
+    }
+
+    const result = loadConfigFromParams(fooPlugin, [barConfig]);
+    expect(result).toEqual(fooPlugin);
+})
+
+test('should load anything from params', () => {
+    const fooPlugin: LennaPlugin = {
+        name: 'foo',
+        enabled: true,
+        config: {}
+    }
+
+    const fooConfig: Config = {
+        name: 'foo',
+        enabled: false,
+        config: {}
+    }
+
+    const result = loadConfigFromParams(fooPlugin, [fooConfig]);
+    expect(result).toEqual(fooPlugin);
+    expect(result.enabled).toBeFalsy();
 })

@@ -20,7 +20,7 @@ const loadConfig = (plugin: LennaPlugin): LennaPlugin => {
     return plugin;
 };
 
-const loadConfigFromParams = (plugin: LennaPlugin, params: any): LennaPlugin => {
+const loadConfigFromParams = (plugin: LennaPlugin, params: Config[]): LennaPlugin => {
     params.forEach((config: Config) => {
         if (config.name === plugin.name) {
             console.log(config);

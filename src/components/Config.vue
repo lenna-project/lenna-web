@@ -13,15 +13,18 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import YAML from "yaml";
 import { LennaPlugin } from "@/models/plugin";
+import {
+  generateBase64Config,
+  generateYamlConfig,
+} from "@/controllers/config_generator";
 export default defineComponent({
   name: "Config",
   props: {
     plugins: {
       type: Array as () => Array<LennaPlugin>,
-      required: true
-    } 
+      required: true,
+    },
   },
   data() {
     return {
@@ -46,34 +49,12 @@ export default defineComponent({
       document.body.removeChild(element);
     },
     generateConfigUrlBase64() {
-      let plugins = [];
-      for (let id in this.plugins) {
-        let plugin = this.plugins[id];
-        if (plugin.enabled) {
-          plugins.push({
-            name: plugin.name,
-            enabled: plugin.enabled,
-            config: plugin.config,
-          });
-        }
-      }
-      let config = JSON.stringify(plugins);
-      this.base64config = this.url + btoa(config);
+      let config = generateBase64Config(this.plugins);
+      this.base64config = this.url + config;
     },
     generateLennaConfig() {
-      let plugins = [];
-      for (let plugin of this.plugins) {
-        if (plugin.enabled) {
-          let config: any = plugin.config;
-          config.name = plugin.plugin.name();
-          plugins.push(config);
-        }
-      }
-      let comment =
-        "# https://github.com/lenna-project/lenna-cli\n" +
-        "# lenna-cli images_path --config lenna.yml\n";
-      let lenna_yml = YAML.stringify({ pipeline: plugins });
-      this.download("lenna.yml", comment + lenna_yml);
+      let lenna_yml = generateYamlConfig(this.plugins);
+      this.download("lenna.yml", lenna_yml);
     },
   },
 });

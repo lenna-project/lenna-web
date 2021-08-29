@@ -22,6 +22,7 @@ import Plugin from "@/components/Plugin.vue";
 import { loadConfig, listPlugins } from "@/controllers/storage";
 import { useToast } from "vue-toastification";
 import {LennaPlugin} from "@/models/plugin";
+import { PluginModule } from "@/models/plugin_module";
 
 interface Configs {
     [key: string]: any
@@ -96,7 +97,7 @@ export default defineComponent({
       return System.import(url).then(async (module: any) => {
         // eslint-disable-next-line no-undef
         await module.init(__webpack_require__.S["default"]);
-        return module.get("default").then((plugin: any) => {
+        return module.get("default").then((plugin: Function) => {
           let pluginConfig = loadConfig({
             name: key,
             url: url,
@@ -128,7 +129,7 @@ export default defineComponent({
         for (const key in data.imports) {
           tasks.push(
             // eslint-disable-next-line no-undef
-            System.import(key).then((plugin: any) => {
+            System.import(key).then((plugin: PluginModule) => {
               let pluginConfig = loadConfig({
                 name: key,
                 url: data.imports[key],

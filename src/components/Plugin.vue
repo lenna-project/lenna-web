@@ -29,6 +29,8 @@
 <script lang="ts">
 import { shallowRef, Ref, defineComponent } from "vue";
 import PluginConfig from "./PluginConfig.vue";
+import {PluginModule} from "@/models/plugin_module";
+import {Config} from "@/models/config";
 import Checkbox from "./Checkbox.vue";
 import Icon from "./Icon.vue";
 import {
@@ -51,9 +53,9 @@ export default defineComponent({
   name: "Plugin",
   props: {
     name: String,
-    plugin: Object,
+    plugin: Object as () => PluginModule,
     url: String,
-    defaultConfig: Object,
+    defaultConfig: Object as () => Config[],
   },
   components: {
     Checkbox,
