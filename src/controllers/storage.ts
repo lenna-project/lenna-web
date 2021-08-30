@@ -30,9 +30,17 @@ const loadConfigFromParams = (plugin: LennaPlugin, params: Config[]): LennaPlugi
     return plugin;
 };
 
+const addPlugin = (plugin: string) => {
+    const plugins: string[] = JSON.parse(localStorage.getItem("plugins") || "[]");
+    if (!plugins.includes(plugin)) {
+        plugins.push(plugin);
+        localStorage.setItem("plugins", JSON.stringify(plugins));
+    }
+};
+
 const listPlugins = (): string[] => {
     const plugins = localStorage.getItem("plugins") || "[]";
     return JSON.parse(plugins);
 }
 
-export { saveConfig, loadConfig, loadConfigFromParams, listPlugins };
+export { saveConfig, loadConfig, loadConfigFromParams, addPlugin, listPlugins };

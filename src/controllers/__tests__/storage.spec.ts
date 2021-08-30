@@ -1,4 +1,4 @@
-import { loadConfig, saveConfig, loadConfigFromParams } from "../storage";
+import { loadConfig, saveConfig, loadConfigFromParams, addPlugin, listPlugins } from "../storage";
 import { LennaPlugin } from '../../models/plugin';
 import { Config } from "@/models/config";
 
@@ -71,4 +71,12 @@ test('should load anything from params', () => {
     const result = loadConfigFromParams(fooPlugin, [fooConfig]);
     expect(result).toEqual(fooPlugin);
     expect(result.enabled).toBeFalsy();
+})
+
+test('should add plugins', () => {
+    addPlugin("foo");
+    addPlugin("bar");
+    const plugins = listPlugins();
+    expect(plugins.length).toBe(2);
+    expect(plugins).toContain("bar");
 })
