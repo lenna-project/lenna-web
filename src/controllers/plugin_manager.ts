@@ -1,7 +1,7 @@
-import { LennaPlugin } from '@/models/plugin';
-import { PluginModule } from '@/models/plugin_module';
+import { LennaPlugin } from '../models/plugin';
+import { PluginModule } from '../models/plugin_module';
 import { Config } from '../models/config';
-import { loadConfig, listPlugins } from "@/controllers/storage";
+import { loadConfig } from "../controllers/storage";
 
 export class PluginManager {
 

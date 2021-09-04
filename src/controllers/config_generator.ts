@@ -1,5 +1,5 @@
 import YAML from "yaml";
-import { LennaPlugin } from "@/models/plugin";
+import { LennaPlugin } from "../models/plugin";
 
 const generateBase64Config = (plugins: LennaPlugin[]): string => {
     const configs = [];

@@ -1,6 +1,6 @@
-import { LennaPlugin } from "@/models/plugin";
-import { Logger } from "@/models/logger";
-import { Image } from "@/models/image";
+import { LennaPlugin } from "../models/plugin";
+import { Logger } from "../models/logger";
+import { Image } from "../models/image";
 
 const processImages = async (sourceImages: Image[], resultImages: Image[], plugins: LennaPlugin[], logger: Logger, progressCallback: Function) => {
 

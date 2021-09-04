@@ -3,7 +3,6 @@
     "target": "esnext",
     "module": "esnext",
     "strict": true,
-    "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
@@ -11,6 +10,9 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "declarationDir": "dist",
     "baseUrl": ".",
     "types": [
       "webpack-env", "jest", "node"
@@ -22,10 +24,9 @@
     },
     "lib": [
       "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
+      "dom"
+    ],
+    "outDir": "dist/"
   },
   "include": [
     "src/**/*.ts",

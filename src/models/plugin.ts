@@ -2,6 +2,7 @@ import { PluginModule } from "./plugin_module";
 
 export interface LennaPlugin {
     name: string;
+    description?: string;
     url?: string;
     icon?: string;
     enabled: boolean;

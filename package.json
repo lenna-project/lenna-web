@@ -15,12 +15,13 @@
   ],
   "homepage": "https://lenna.app",
   "author": "chriamue",
-  "main": "dist/lenna-web.js",
-  "module": "src/index.ts",
+  "main": "dist/lenna-app.js",
+  "module": "dist/index.js",
   "scripts": {
     "start": "webpack-cli serve",
     "serve": "serve dist -p 3001",
     "build": "webpack --mode production",
+    "build-lib": "tsc",
     "clean": "rm -rf dist",
     "test": "jest",
     "storybook": "start-storybook -p 6006",
@@ -87,6 +88,8 @@
     "webpack-dev-server": "^4.0.0"
   },
   "files": [
-    "dist/**/*"
+    "src/**/*",
+    "dist/**/*",
+    "lib/**/*"
   ]
 }

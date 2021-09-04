@@ -18,9 +18,9 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { VueDraggableNext } from "vue-draggable-next";
-import Plugin from "@/components/Plugin.vue";
-import {LennaPlugin} from "@/models/plugin";
-import { PluginManager } from "@/controllers/plugin_manager";
+import Plugin from "../components/Plugin.vue";
+import {LennaPlugin} from "../models/plugin";
+import { PluginManager } from "../controllers/plugin_manager";
 
 interface Configs {
     [key: string]: any

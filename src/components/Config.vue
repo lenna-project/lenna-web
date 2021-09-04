@@ -13,11 +13,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { LennaPlugin } from "@/models/plugin";
+import { LennaPlugin } from "../models/plugin";
 import {
   generateBase64Config,
   generateYamlConfig,
-} from "@/controllers/config_generator";
+} from "../controllers/config_generator";
 export default defineComponent({
   name: "Config",
   props: {

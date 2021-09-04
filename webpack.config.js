@@ -16,6 +16,7 @@ module.exports = {
   target: "web",
   entry: {
     "lenna-web": path.join(__dirname, "src/main.ts"),
+    "index": path.join(__dirname, "src/index.ts"),
   },
   // output: {
   //   path: path.resolve(__dirname, './dist'),
@@ -23,10 +24,6 @@ module.exports = {
   // },
   output: {
     publicPath: "auto",
-    library: {
-      name: "lennaWeb",
-      type: "umd"
-    },
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],

@@ -16,6 +16,8 @@ jobs:
           scope: "@lenna-project"
           always-auth: true
       - run: yarn
+      - run: yarn build
+      - run: yarn build-lib
       - run: yarn publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM }}

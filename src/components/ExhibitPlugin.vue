@@ -18,12 +18,13 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from "vue";
 import { useToast, POSITION } from "vue-toastification";
 import { addPlugin } from "../controllers/storage";
 import { LennaPlugin } from "../models/plugin";
 
-export default {
-  name: "Plugin",
+export default defineComponent({
+  name: "ExhibitPlugin",
   props: {
     plugin: Object as () => LennaPlugin,
   },
@@ -67,7 +68,7 @@ export default {
   created() {
     this.loadIcon();
   },
-};
+});
 </script>
 
 <style scoped lang="scss">
