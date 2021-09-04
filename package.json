@@ -1,13 +1,18 @@
 {
   "name": "@lenna-proj/lenna-web",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lenna-project/lenna-web.git"
   },
   "license": "MIT",
-  "keywords": ["lenna-project", "webpage", "vue", "components"],
+  "keywords": [
+    "lenna-project",
+    "webpage",
+    "vue",
+    "components"
+  ],
   "homepage": "https://lenna.app",
   "author": "chriamue",
   "main": "dist/lenna-web.js",
