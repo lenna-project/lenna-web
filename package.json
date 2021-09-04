@@ -6,7 +6,12 @@
     "type": "git",
     "url": "git+https://github.com/lenna-project/lenna-web.git"
   },
+  "license": "MIT",
+  "keywords": ["lenna-project", "webpage", "vue", "components"],
   "homepage": "https://lenna.app",
+  "author": "chriamue",
+  "main": "dist/lenna-web.js",
+  "module": "src/index.ts",
   "scripts": {
     "start": "webpack-cli serve",
     "serve": "serve dist -p 3001",
@@ -75,5 +80,8 @@
     "webpack": "^5.51.1",
     "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^4.0.0"
-  }
+  },
+  "files": [
+    "dist/**/*"
+  ]
 }

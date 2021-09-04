@@ -23,6 +23,10 @@ module.exports = {
   // },
   output: {
     publicPath: "auto",
+    library: {
+      name: "lennaWeb",
+      type: "umd"
+    },
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
