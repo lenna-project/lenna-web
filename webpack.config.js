@@ -9,7 +9,7 @@ const deps = require("./package.json").dependencies;
 module.exports = {
   mode: "development",
   cache: false,
-  devtool: "source-map",
+  devtool: "inline-source-map",
   optimization: {
     minimize: false,
   },
@@ -65,6 +65,10 @@ module.exports = {
         },
       },
       {
+        test: /\.js$/,
+        loader: 'babel-loader'
+      },
+      {
         test: /\.svg$/i,
         use: {
           loader: "url-loader",
@@ -93,6 +97,8 @@ module.exports = {
     ],
   },
   plugins: [
+
+    new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
       filename: "[name].css",
     }),
@@ -118,7 +124,6 @@ module.exports = {
       template: path.resolve(__dirname, "./index.html"),
       filename: "./about/index.html",
     }),
-    new VueLoaderPlugin(),
     new CopyPlugin({
       patterns: ["public"],
     }),
