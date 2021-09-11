@@ -147,7 +147,7 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="scss">
-@import "@/styles/_variables.scss";
+@import "../styles/_variables.scss";
 .plugin {
   margin: 10px;
   padding: 10px;

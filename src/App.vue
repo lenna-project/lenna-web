@@ -7,8 +7,8 @@
 </template>
 <script>
 import { defineComponent } from "vue";
-import Navbar from "@/components/Navbar.vue";
-import Footer from "@/components/Footer.vue";
+import { Navbar } from "@lenna-proj/lenna-web";
+import { Footer } from "@lenna-proj/lenna-web";
 export default defineComponent({
   name: "App",
   components: {

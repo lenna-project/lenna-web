@@ -15,8 +15,7 @@ module.exports = {
   },
   target: "web",
   entry: {
-    "lenna-web-app": path.join(__dirname, "src/main.ts"),
-    "index": path.join(__dirname, "src/index.ts"),
+    "lenna-web": path.join(__dirname, "src/entry.ts"),
   },
   // output: {
   //   path: path.resolve(__dirname, './dist'),
@@ -97,7 +96,6 @@ module.exports = {
     ],
   },
   plugins: [
-
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
       filename: "[name].css",

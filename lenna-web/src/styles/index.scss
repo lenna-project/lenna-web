@@ -1,0 +1,19 @@
+@import '_variables';
+#app {
+  color: black;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+button {
+  color: $text_color;
+  background-color: $button_color;
+  border: 2px solid darkgray;
+  border-radius: 15px;
+}
+
+button :hover {
+  border: 5px solid darkgray;
+}
+
+button:active {
+  background-color: $primary_color;
+}
