@@ -4,10 +4,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const CopyPlugin = require("copy-webpack-plugin");
-const deps = require("./package.json").dependencies;
+const deps = require("../package.json").dependencies;
 
 module.exports = {
-  mode: "development",
   cache: false,
   devtool: "inline-source-map",
   optimization: {
@@ -15,8 +14,8 @@ module.exports = {
   },
   target: "web",
   entry: {
-    "lenna-web": path.join(__dirname, "src/main.ts"),
-    "index": path.join(__dirname, "src/index.ts"),
+    "lenna-web": path.join(__dirname, "..", "src/main.ts"),
+    "index": path.join(__dirname, "..", "src/index.ts"),
   },
   // output: {
   //   path: path.resolve(__dirname, './dist'),
@@ -28,7 +27,7 @@ module.exports = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
     alias: {
-      "@": path.join(__dirname, "src/"),
+      "@": path.join(__dirname, "..", "src/"),
       // this isn't technically needed, since the default `vue` entry for bundlers
       // is a simple `export * from '@vue/runtime-dom`. However having this
       // extra re-export somehow causes webpack to always invalidate the module
@@ -117,11 +116,11 @@ module.exports = {
       },
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "./index.html"),
+      template: path.resolve(__dirname, "..", "./index.html"),
     }),
     new HtmlWebpackPlugin({
       title: "lenna-web-about",
-      template: path.resolve(__dirname, "./index.html"),
+      template: path.resolve(__dirname, "..", "./index.html"),
       filename: "./about/index.html",
     }),
     new CopyPlugin({
