@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 
-import Config from "../Config.vue";
+import Config from "../ConfigComp.vue";
 
 test('navbar', () => {
     const wrapper = shallowMount(Config, {

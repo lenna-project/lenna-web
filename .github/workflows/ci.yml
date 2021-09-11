@@ -15,7 +15,7 @@ jobs:
       - name: Install node dependencies
         run: yarn
       - name: Build App
-        run: NODE_ENV=production yarn build
+        run: NODE_ENV=production yarn build:app
       - name: Custom 404 for route redirect
         run: cp dist/index.html dist/404.html
 

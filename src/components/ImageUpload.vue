@@ -39,7 +39,7 @@ import { defineComponent } from "vue";
 import FileUpload from "vue-upload-component";
 import VueEasyLightbox from "vue-easy-lightbox";
 
-declare interface ImageUploadData {
+export declare interface ImageUploadData {
   files: Object[];
   images: Object[];
   visible: boolean;

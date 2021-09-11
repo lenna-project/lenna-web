@@ -48,12 +48,12 @@ import { defineComponent, ref } from "vue";
 import * as NProgress from "nprogress";
 import { Slide } from "vue3-burger-menu";
 import { useToast } from "vue-toastification";
-import PluginsManager from "@/components/PluginsManager.vue";
-import ImageUpload from "@/components/ImageUpload.vue";
-import ImagePreview from "@/components/ImagePreview.vue";
-import Config from "@/components/Config.vue";
-import Help from "@/components/Help.vue";
-import { PluginManager } from "@/controllers/plugin_manager";
+import PluginsManager from "../components/PluginsManager.vue";
+import ImageUpload from "../components/ImageUpload.vue";
+import ImagePreview from "../components/ImagePreview.vue";
+import ConfigComp from "../components/ConfigComp.vue";
+import Help from "../components/Help.vue";
+import { PluginManager } from "../controllers/plugin_manager";
 import { Image } from "../models/image";
 import { processImages } from "../controllers/processor";
 
@@ -74,7 +74,7 @@ export default defineComponent({
     PluginsManager,
     ImageUpload,
     ImagePreview,
-    Config,
+    ConfigComp,
     Help,
   },
   data(): HomeData {
@@ -156,7 +156,7 @@ export default defineComponent({
             toast.success(message);
           },
         },
-          NProgress.set
+        NProgress.set
       );
 
       this.imageUpload.images = [];

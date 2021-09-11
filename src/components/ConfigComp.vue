@@ -19,7 +19,7 @@ import {
   generateYamlConfig,
 } from "../controllers/config_generator";
 export default defineComponent({
-  name: "Config",
+  name: "ConfigComp",
   props: {
     plugins: {
       type: Array as () => Array<LennaPlugin>,
