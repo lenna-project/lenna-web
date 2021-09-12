@@ -59,13 +59,13 @@ module.exports = {
           options: { limit: 8192 },
         },
       },
-      {
-        test: /\.png$/,
+      /*{
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
         use: {
           loader: "url-loader",
-          options: { limit: 8192 },
+          options: { limit: true },
         },
-      },
+      },*/
       {
         test: /\.(css|s[ac]ss)$/i,
         use: [

@@ -22,11 +22,11 @@ import Plugin from "../components/Plugin.vue";
 import {LennaPlugin} from "../models/plugin";
 import { PluginManager } from "../controllers/plugin_manager";
 
-interface Configs {
+export interface Configs {
     [key: string]: any
 }
 
-declare interface PluginsManagerData {
+export declare interface PluginsManagerData {
   plugins: LennaPlugin[];
   configs: Configs;
 }

@@ -7,7 +7,7 @@
         placeholder="https://lenna.app/lenna-plugins/desaturate/remoteEntry.js"
       />
       <br />
-      <Config v-if="pluginsManager" :plugins="pluginsManager.plugins" />
+      <ConfigComp v-if="pluginsManager" :plugins="pluginsManager.plugins" />
       <Help />
     </Slide>
     <div class="main">
@@ -57,7 +57,7 @@ import { PluginManager } from "../controllers/plugin_manager";
 import { Image } from "../models/image";
 import { processImages } from "../controllers/processor";
 
-declare interface HomeData {
+export declare interface HomeData {
   pluginUrl: string;
   just: string | null;
   defaultConfig: [];

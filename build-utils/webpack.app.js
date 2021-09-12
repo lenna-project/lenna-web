@@ -13,11 +13,21 @@ module.exports = {
   },
   target: "web",
   entry: {
-    "lenna-web": path.join(__dirname, "..", "src/main.ts"),
-    index: path.join(__dirname, "..", "src/index.ts"),
+    "lenna-web-app": path.join(__dirname, "..", "src/main.ts")
   },
   output: {
     publicPath: "auto",
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        use: {
+          loader: "url-loader",
+          options: { limit: 8192 },
+        },
+      }
+    ],
   },
   plugins: [
     new DefinePlugin({
@@ -26,8 +36,8 @@ module.exports = {
       },
     }),
     new ModuleFederationPlugin({
-      name: "lenna-web",
-      library: { type: "amd", name: "lenna-web" },
+      name: "lenna-web-app",
+      library: { type: "amd", name: "lenna-web-app" },
       shared: {
         vue: {
           requiredVersion: deps.vue,

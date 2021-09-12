@@ -1,7 +1,7 @@
 {
   "name": "@lenna-proj/lenna-web",
   "private": false,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lenna-project/lenna-web.git"
@@ -15,9 +15,9 @@
   ],
   "homepage": "https://lenna.app",
   "author": "chriamue",
-  "main": "dist/lenna-app.js",
-  "module": "dist/lenna-app.js",
-  "types": "dist/types/index.d.ts",
+  "main": "dist/lenna-web.js",
+  "module": "dist/lenna-web.js",
+  "types": "dist/types",
   "scripts": {
     "start": "webpack serve --config build-utils/webpack.config.js --env env=dev --env lib=app",
     "serve": "serve dist -p 3001",
@@ -90,9 +90,18 @@
     "webpack-dev-server": "^4.0.0",
     "webpack-merge": "^5.8.0"
   },
+  "peerDependencies": {
+    "vue": "^3.2.6",
+    "vue-easy-lightbox": "^1.2.3",
+    "vue-router": "^4.0.11",
+    "vue-toastification": "^2.0.0-rc.1",
+    "vue-upload-component": "^3.0.50"
+  },
   "files": [
-    "src/**/*",
-    "dist/**/*",
-    "lib/**/*"
-  ]
+    "src",
+    "dist/*"
+  ],
+  "engines": {
+    "node": ">=14"
+  }
 }

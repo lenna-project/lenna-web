@@ -1,12 +1,12 @@
 const path = require("path");
-const { DefinePlugin } = require("webpack");
+const { DefinePlugin, ProvidePlugin } = require("webpack");
 
 module.exports = {
   mode: "production",
   optimization: {
-    minimize: true,
+    minimize: false,
   },
-  target: "es2020",
+  target: "es2015",
   entry: {
     "lenna-web": path.join(__dirname, "..", "src/index.ts"),
   },
@@ -14,18 +14,26 @@ module.exports = {
     path: path.resolve(__dirname, "..", "dist"),
     filename: "lenna-web.js",
     library: "lennaWeb",
-    chunkFilename: "[id].js",
-    chunkFormat: "commonjs",
+    chunkFormat: "module",
+    libraryTarget: "umd"
   },
   externals: {
     vue: "vue",
-    "vue-router": "vue-router",
-    "vue-toastification": "vue-toastification",
-    "vue-upload-component": "vue-upload-component",
-    "vue-easy-lightbox": "vue-easy-lightbox",
+    "vue-router": "vue-router"
   },
   resolve: {
     fallback: { stream: false },
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        use: {
+          loader: "url-loader",
+          options: { limit: true },
+        },
+      }
+    ],
   },
   plugins: [
     new DefinePlugin({
@@ -33,6 +41,10 @@ module.exports = {
         NODE_ENV: JSON.stringify("production"),
       },
     }),
+    new ProvidePlugin({
+      vue: "vue",
+      "vue-router": "vue-router"
+    })
   ],
   devtool: "source-map",
 };

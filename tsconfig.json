@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2020",
+    "target": "es5",
     "module": "es2020",
     "strict": true,
     "importHelpers": true,
@@ -15,7 +15,9 @@
     "declarationDir": "dist/types",
     "baseUrl": ".",
     "types": [
-      "webpack-env", "jest", "node"
+      "webpack-env",
+      "jest",
+      "node"
     ],
     "paths": {
       "@/*": [
@@ -24,7 +26,9 @@
     },
     "lib": [
       "es2020",
-      "dom"
+      "dom",
+      "dom.iterable",
+      "scripthost"
     ],
     "outDir": "dist/"
   },
