@@ -39,6 +39,7 @@ import VueEasyLightbox from "vue-easy-lightbox";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import { useToast } from "vue-toastification";
+import { convert } from "@lenna-proj/lenna-cli";
 
 interface ImagePreviewImage {
   name: string
@@ -81,24 +82,13 @@ export default defineComponent({
     createObjectURL(image: ImagePreviewImage) {
       return URL.createObjectURL(image);
     },
-    async safeImage(cli: any, file: any, format: string) {
+    async safeImage(file: any, format: string) {
       let data = await file
         .arrayBuffer()
         .then((image: any) => new Uint8Array(image));
-      return cli.save(data, format);
+      return convert(data, format);
     },
     async downloadZip() {
-      // eslint-disable-next-line no-undef
-      let cli = await System.import(
-        "https://lenna.app/lenna-cli/remoteEntry.js"
-      ).then((module: any) => {
-        // eslint-disable-next-line no-undef
-        module.init(__webpack_require__.S["default"]);
-        return module.get("default").then((cli: Function) => {
-          return cli();
-        });
-      });
-
       let zip = new JSZip();
       const toast = useToast();
       const imageCount = this.images.length;
@@ -110,7 +100,7 @@ export default defineComponent({
       let promises = this.images.map((image: ImagePreviewImage) => {
         let type = `image/${this.filetype}`;
 
-        return this.safeImage(cli, image, this.filetype).then(
+        return this.safeImage(image, this.filetype).then(
           (compressed_image) => {
             let file = new File([compressed_image], image.name, { type });
             compressedCount++;
