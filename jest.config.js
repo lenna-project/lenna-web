@@ -146,7 +146,7 @@ module.exports = {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  // testEnvironment: "jest-environment-node",
+  testEnvironment: "jsdom",
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
@@ -203,7 +203,7 @@ module.exports = {
 
   moduleFileExtensions: ["js", "ts", "json", "vue"],
   transform: {
-    ".*\\.(vue)$": "vue-jest",
+    ".*\\.(vue)$": "@vue/vue3-jest",
     "^.+\\.tsx?$": "ts-jest",
     ".+\\.(css|styl|less|sass|scss|png|jpg|svg|ttf|woff|woff2)$":
       "jest-transform-stub",
