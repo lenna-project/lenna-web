@@ -9,3 +9,59 @@ Online version of the lenna image processing app.
 </a>
 
 [https://lenna.app](https://lenna.app)
+
+## About
+
+Lenna is a library for image processing algorithms. The web page allows to
+test and use them.
+
+## Plugins
+
+Lenna allows to plug in more algorithms. 
+The plugins can be activated for use in the <a href="https://lenna.app/marketplace/">marketplace</a>. 
+Some examples can be found at <a href="https://github.com/lenna-project/lenna-plugins">lenna-project/lenna-plugins</a>
+on github.
+
+Following a list of available plugins:
+
+* <b>blur</b> - Blurs the image. The strength can be configured.
+* <b>dramatic</b> - Gives the image a dramatic touch.
+* <b>rotate</b> - Rotates the image.
+* <b>canny</b> - Shows edges of objects in the image.
+
+## Build
+
+Using yarn, you can build the lib or the app:
+
+Lib:
+
+```sh
+yarn install
+yarn build:lib
+```
+
+Web App:
+
+```sh
+yarn install
+yarn build:app
+yarn serve
+```
+
+## storybook
+
+To view the components in a storybook, run:
+
+```sh
+yarn storybook
+```
+
+## test
+
+Test running:
+
+```sh
+yarn test
+```
+
+Coverage is generated then.
