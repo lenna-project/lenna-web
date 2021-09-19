@@ -14,9 +14,9 @@ declare const _default: import("vue").DefineComponent<{}, {
     pluginsManager: any;
 }, HomeData, {}, {
     loadPlugin(pluginUrl: string): void;
-    loadPluginsMap(): void;
-    loadPluginJson(): void;
-    loadActivatedPlugins(): void;
+    loadDefaultPluginsMap(): void;
+    loadDefaultPluginJson(): void;
+    loadAddedPlugins(): void;
     onMorePlugins(): void;
     changeImages(files: any): void;
     processImages(): Promise<void>;
