@@ -135,7 +135,6 @@ export default defineComponent({
       );
     },
     loadAddedPlugins() {
-      console.log(listPlugins());
       listPlugins().forEach((plugin) => {
         this.pluginManager.importPlugin(plugin, plugin);
       });

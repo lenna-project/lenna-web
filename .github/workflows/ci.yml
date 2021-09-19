@@ -26,3 +26,12 @@ jobs:
           publish_branch: gh-pages
           publish_dir: ./dist
           keep_files: true
+
+      - name: Deploy App
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.DEPLOY_KEY }}
+          external_repository: lenna-project/lenna-project.github.io
+          publish_branch: gh-pages
+          publish_dir: ./dist
+          keep_files: true
