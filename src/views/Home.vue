@@ -56,6 +56,7 @@ import Help from "../components/Help.vue";
 import { PluginManager } from "../controllers/plugin_manager";
 import { Image } from "../models/image";
 import { processImages } from "../controllers/processor";
+import { listPlugins } from "../controllers/storage";
 
 export declare interface HomeData {
   pluginUrl: string;
@@ -113,25 +114,31 @@ export default defineComponent({
       this.pluginManager.filter = this.$route.query.just.toString();
       this.just = this.$route.query.just.toString();
     }
-    this.loadPluginsMap();
-    this.loadPluginJson();
+    this.loadDefaultPluginsMap();
+    this.loadDefaultPluginJson();
+    this.loadAddedPlugins();
   },
   methods: {
     loadPlugin(pluginUrl: string) {
       console.log("loaded plugin: ", pluginUrl);
-      //this.pluginsManager.importPlugin(pluginUrl, pluginUrl);
       this.pluginManager.importPlugin(pluginUrl, pluginUrl);
     },
 
-    loadPluginsMap() {
+    loadDefaultPluginsMap() {
       this.pluginManager.importPluginMap(
         "https://lenna.app/lenna-plugins/importmap.json"
       );
     },
-    loadPluginJson() {
+    loadDefaultPluginJson() {
       this.pluginManager.importPluginsJson(
         "https://lenna.app/lenna-plugins/plugins.json"
       );
+    },
+    loadAddedPlugins() {
+      console.log(listPlugins());
+      listPlugins().forEach((plugin) => {
+        this.pluginManager.importPlugin(plugin, plugin);
+      });
     },
     onMorePlugins() {
       window.location.replace("/marketplace");
