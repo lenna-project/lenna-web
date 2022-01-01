@@ -24,13 +24,13 @@ export default defineComponent({
   computed: {
     value: {
       get() {
-        return this.checked
+        return this.checked;
       },
       set(value: boolean) {
-        this.$emit('update:checked', value)
-      }
-    }
-  }
+        this.$emit("update:checked", value);
+      },
+    },
+  },
 });
 </script>
 <style scoped lang="scss">

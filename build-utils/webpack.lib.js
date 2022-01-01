@@ -6,7 +6,7 @@ module.exports = {
   optimization: {
     minimize: false,
   },
-  target: "es2015",
+  target: "es2020",
   entry: {
     "lenna-web": path.join(__dirname, "..", "src/index.ts"),
   },

@@ -60,15 +60,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
 import Help from "../components/Help.vue";
 
-export default defineComponent({
+export default {
   name: "About",
   components: {
     Help,
   },
-});
+};
 </script>
 <style scoped lang="scss">
 @import "@/styles/_variables.scss";

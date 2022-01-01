@@ -6,7 +6,7 @@
         <input
           type="number"
           :placeholder="c.key"
-          v-model.number="c.value"
+          v-model="c.value"
           @change="updateConfig()"
           v-bind:id="c.key"
         />

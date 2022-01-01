@@ -40,9 +40,11 @@ import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import { useToast } from "vue-toastification";
 import { convert } from "@lenna-proj/lenna-cli";
+import { ImageSource } from "../models/image";
 
-interface ImagePreviewImage {
-  name: string
+declare interface FileOption {
+  text: string;
+  value: string;
 }
 
 declare interface ImagePreviewData {
@@ -50,7 +52,7 @@ declare interface ImagePreviewData {
   visible: boolean;
   index: number;
   filetype: string;
-  options: Object[];
+  options: Array<FileOption>;
 }
 
 export default defineComponent({
@@ -59,7 +61,7 @@ export default defineComponent({
   },
   props: {
     images: {
-      type: Array as () => Array<ImagePreviewImage>,
+      type: Array as () => Array<ImageSource>,
       required: true,
     },
   },
@@ -79,7 +81,7 @@ export default defineComponent({
     };
   },
   methods: {
-    createObjectURL(image: ImagePreviewImage) {
+    createObjectURL(image: ImageSource) {
       return URL.createObjectURL(image);
     },
     async safeImage(file: any, format: string) {
@@ -97,7 +99,7 @@ export default defineComponent({
       }
       let compressedCount = 0;
       toast.info(`compressing of ${this.images.length} images started`);
-      let promises = this.images.map((image: ImagePreviewImage) => {
+      let promises = this.images.map((image: ImageSource) => {
         let type = `image/${this.filetype}`;
 
         return this.safeImage(image, this.filetype).then(
