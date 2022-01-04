@@ -1,6 +1,10 @@
 <template>
   <div class="plugins-manager">
-    <draggable class="dragArea list-group plugins" :list="plugins">
+    <draggable
+      class="dragArea list-group plugins"
+      :list="plugins"
+      @change="change()"
+    >
       <div class="list-group-item" v-for="item in plugins" :key="item.name">
         <Plugin
           :name="item.name"
@@ -19,11 +23,11 @@
 import { defineComponent } from "vue";
 import { VueDraggableNext } from "vue-draggable-next";
 import Plugin from "../components/Plugin.vue";
-import {LennaPlugin} from "../models/plugin";
+import { LennaPlugin } from "../models/plugin";
 import { PluginManager } from "../controllers/plugin_manager";
 
 export interface Configs {
-    [key: string]: any
+  [key: string]: any;
 }
 
 export declare interface PluginsManagerData {
@@ -51,7 +55,6 @@ export default defineComponent({
     };
   },
   beforeMount() {
-    
     this.plugins = this.pluginManager?.getPlugins() || [];
     //this.importPlugin("local", "http://localhost:3002/remoteEntry.js");
   },
@@ -60,6 +63,7 @@ export default defineComponent({
       let plugin = this.plugins.find((o: any) => o.name === name);
       if (plugin) {
         plugin.enabled = enabled;
+        this.change();
       }
     },
     changeConfig(name: string, config: Object) {
@@ -67,6 +71,10 @@ export default defineComponent({
       if (plugin) {
         plugin.config = config;
       }
+      this.change();
+    },
+    change() {
+      this.$emit("change");
     },
     raw(comp: any) {
       return comp;

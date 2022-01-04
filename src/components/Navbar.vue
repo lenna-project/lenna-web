@@ -2,6 +2,7 @@
   <div class="navbar">
     <div id="banner"><img src="@/assets/banner.png" /></div>
     <router-link to="/">Home</router-link>
+    <router-link to="/batch">Batch Processing</router-link>
     <a href="marketplace">Marketplace</a>
     <router-link to="/about">About</router-link>
   </div>

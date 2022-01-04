@@ -13,11 +13,18 @@
     <div class="main">
       <h1>Convert images online without upload of your data</h1>
       <h2 v-if="just">{{ just }}</h2>
-      <div id="process" class="top_main">
-        <ImageUploadPreview
-          :images="resultImages"
+      <div class="top_main">
+        <ImageUpload
+          class="v-step-3"
+          ref="imageUpload"
           @changeImage="changeImages($event)"
         />
+        <div id="process">
+          <button class="v-step-5" v-on:click="processImages">
+            process images
+          </button>
+        </div>
+        <ImagePreview class="v-step-6" :images="resultImages" />
       </div>
       <div class="bottom_main">
         <PluginsManager
@@ -26,7 +33,6 @@
           :pluginManager="pluginManager"
           :defaultConfig="defaultConfig"
           :defaultPlugins="defaultPlugins"
-          @change="processImages()"
         />
       </div>
       <div id="line">
@@ -43,34 +49,36 @@ import * as NProgress from "nprogress";
 import { Slide } from "vue3-burger-menu";
 import { useToast } from "vue-toastification";
 import PluginsManager from "../components/PluginsManager.vue";
-import ImageUploadPreview from "../components/ImageUploadPreview.vue";
+import ImageUpload from "../components/ImageUpload.vue";
+import ImagePreview from "../components/ImagePreview.vue";
 import ConfigComp from "../components/ConfigComp.vue";
 import Help from "../components/Help.vue";
 import { PluginManager } from "../controllers/plugin_manager";
-import { Image, ImageSource } from "../models/image";
+import { Image } from "../models/image";
 import { processImages } from "../controllers/processor";
 import { listPlugins } from "../controllers/storage";
 
-export declare interface HomeData {
+export declare interface BatchData {
   pluginUrl: string;
   just: string | null;
   defaultConfig: [];
   defaultPlugins: string[];
   sourceImages: Image[];
-  resultImages: ImageSource[];
+  resultImages: Image[];
   pluginManager: PluginManager;
 }
 
 export default defineComponent({
-  name: "Home",
+  name: "Batch",
   components: {
     Slide,
     PluginsManager,
-    ImageUploadPreview,
+    ImageUpload,
+    ImagePreview,
     ConfigComp,
     Help,
   },
-  data(): HomeData {
+  data(): BatchData {
     return {
       pluginUrl: "",
       just: null,
@@ -82,8 +90,10 @@ export default defineComponent({
     };
   },
   setup: () => {
+    const imageUpload = ref(ImageUpload);
     const pluginsManager = ref(PluginsManager);
     return {
+      imageUpload,
       pluginsManager,
     };
   },
@@ -133,23 +143,31 @@ export default defineComponent({
       window.location.replace("/marketplace");
     },
     changeImages(files: any) {
-      this.sourceImages = [files.file];
-      this.processImages();
+      this.sourceImages.push(files.file);
     },
     async processImages() {
       NProgress.configure({ parent: "#process" });
       NProgress.start();
+      const toast = useToast();
 
       await processImages(
         this.sourceImages,
         this.resultImages,
         this.pluginManager.getPlugins(),
         {
-          info: (message: string) => {},
-          success: (message: string) => {},
+          info: (message: string) => {
+            toast.info(message);
+          },
+          success: (message: string) => {
+            toast.success(message);
+          },
         },
         NProgress.set
       );
+
+      this.imageUpload.images = [];
+      this.sourceImages = [];
+
       NProgress.done();
       NProgress.remove();
     },
@@ -183,7 +201,7 @@ export default defineComponent({
 }
 .top_main {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
 }
 .bottom_main {
   padding-top: 20px;
