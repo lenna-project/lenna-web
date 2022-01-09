@@ -13,10 +13,10 @@ test('checked', async () => {
         }
     })
     await wrapper.find('#width').setValue("500")
-    expect(wrapper.emitted().changeConfig[1]).toEqual([new Map(Object.entries({
+    expect(wrapper.emitted().changeConfig[1]).toEqual([{
         width: 500,
         height: 300
-    }))])
+    }])
     expect(wrapper.text()).toContain('width')
     expect(wrapper.text()).toContain('height')
 })

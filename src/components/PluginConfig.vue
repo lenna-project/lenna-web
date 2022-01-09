@@ -16,15 +16,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
+
+export interface Configs {
+  [key: string]: any;
+}
 
 interface Config {
-  key: string,
-  value: any
+  key: string;
+  value: any;
 }
 
 declare interface PluginConfigData {
-  config: Config[]
+  config: Config[];
 }
 
 export default defineComponent({
@@ -39,9 +43,9 @@ export default defineComponent({
   },
   methods: {
     async updateConfig() {
-      let config: Map<string, Object> = new Map();
+      let config: Configs = {};
       for (let c of this.config) {
-        config.set(c.key, c.value);
+        config[c.key] = c.value;
       }
       this.$emit("changeConfig", config);
     },
