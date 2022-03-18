@@ -30,11 +30,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify("production"),
-      },
-    }),
     new ModuleFederationPlugin({
       name: "lenna-web-app",
       library: { type: "amd", name: "lenna-web-app" },

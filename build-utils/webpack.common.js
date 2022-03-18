@@ -53,20 +53,6 @@ module.exports = {
         loader: "babel-loader",
       },
       {
-        test: /\.svg$/i,
-        use: {
-          loader: "url-loader",
-          options: { limit: 8192 },
-        },
-      },
-      /*{
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        use: {
-          loader: "url-loader",
-          options: { limit: true },
-        },
-      },*/
-      {
         test: /\.(css|s[ac]ss)$/i,
         use: [
           process.env.NODE_ENV !== "production"

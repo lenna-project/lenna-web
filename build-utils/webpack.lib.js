@@ -36,11 +36,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify("production"),
-      },
-    }),
     new ProvidePlugin({
       vue: "vue",
       "vue-router": "vue-router"
