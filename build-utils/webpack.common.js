@@ -53,6 +53,10 @@ module.exports = {
         loader: "babel-loader",
       },
       {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource'
+      },
+      {
         test: /\.(css|s[ac]ss)$/i,
         use: [
           process.env.NODE_ENV !== "production"

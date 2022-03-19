@@ -26,13 +26,6 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        use: {
-          loader: "url-loader",
-          options: { limit: true },
-        },
-      }
     ],
   },
   plugins: [
