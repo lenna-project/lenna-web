@@ -33,7 +33,7 @@
         class="pic"
         @click="() => showImg(index)"
       >
-        <img max-height="800" :src="src" />
+        <img :src="src" />
       </div>
     </div>
     <vue-easy-lightbox
@@ -222,6 +222,10 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+.image-preview img {
+  max-width: 100%;
+  max-height: 100%;
 }
 .image-container {
   height: 600px;
