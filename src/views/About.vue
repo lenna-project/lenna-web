@@ -12,8 +12,8 @@
       </ul>
     <h2>Plugins</h2>
     <p>
-      Lenna allows to plug in more algorithms. 
-      The plugins can be activated for use in the <a href="https://lenna.app/marketplace/">marketplace</a>. 
+      Lenna allows to plug in more algorithms.
+      The plugins can be activated for use in the <a href="https://lenna.app/marketplace/">marketplace</a>.
       Some examples can be found at
       <a href="https://github.com/lenna-project/lenna-plugins"
         >lenna-project/lenna-plugins</a
@@ -30,10 +30,10 @@
       <li><b>canny</b> - Shows edges of objects in the image.</li>
       </ul>
     </p>
-        
+
     <h2>Jupyter Notebooks</h2>
     View some notebooks <a href="/jupyter">here</a> to see how the plugins can be used in python.
-    
+
     <h2>Command Line Interface</h2>
     <iframe src="https://snapcraft.io/lenna-cli/embedded?button=black&summary=true" frameborder="0" width="100%" height="380px" style="border: 1px solid #CCC; border-radius: 2px;"></iframe>
     <p>
@@ -56,16 +56,20 @@
     You can find installers for Mac, Linux and Windows.
     <br />
 
+    <h2>Learn German with Konnektoren</h2>
+    <KonnektorenPromo />
   </div>
 </template>
 
 <script lang="ts">
 import Help from "../components/Help.vue";
+import KonnektorenPromo from "../components/KonnektorenPromo.vue";
 
 export default {
   name: "About",
   components: {
     Help,
+    KonnektorenPromo,
   },
 };
 </script>
